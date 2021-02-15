@@ -1,0 +1,6 @@
+environment:
+  my_variable:
+    secure: W100DW99ykVZNQ+Rx1HM5g==
+
+  my_variable2:
+    secure: 4fOvO3IUXSNCKmNCMBSYNw==
