@@ -1,3 +1,14 @@
+version: 1.0.{build}
+image: Ubuntu1804
+test: off
+deploy:
+- provider: FTP
+  host: 165.227.87.165
+  protocol: ftp
+  username: ftpappveyor
+  password:
+    secure: F5QxSRIRsOPhiyLCVoJRjA==
+
 environment:
   my_variable:
     secure: W100DW99ykVZNQ+Rx1HM5g==
