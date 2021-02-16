@@ -4,9 +4,9 @@ test: off
 deploy:
 - provider: FTP
   host: 165.227.87.165
-  protocol: ftp
-  username: ftpappveyor
-  password:
+  protocol: sftp
+  username: root
+  password: 3qmxzsDBC#e&74Z
     secure: F5QxSRIRsOPhiyLCVoJRjA==
 
 environment:
