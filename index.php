@@ -1,6 +1,6 @@
 <?php
 // Written by George Carroll
-// updated 2-16-2021
+// updated 02-16-2021
 // 
 // set up database for previous condition record***********************
 include '/var/www/Site1/htdocs/RepeaterWarning/.sec/config.php';
