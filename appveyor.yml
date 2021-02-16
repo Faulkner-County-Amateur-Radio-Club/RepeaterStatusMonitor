@@ -3,15 +3,13 @@ image: Ubuntu1804
 test: off
 deploy:
 - provider: FTP
-  host: 165.227.87.165
-  protocol: sftp
-  username: root
-  password: 3qmxzsDBC#e&74Z
-    secure: F5QxSRIRsOPhiyLCVoJRjA==
-
-environment:
-  my_variable:
-    secure: W100DW99ykVZNQ+Rx1HM5g==
-
-  my_variable2:
-    secure: 4fOvO3IUXSNCKmNCMBSYNw==
+  host: 
+    secure: ZDYooCiUAomCBwZ+71Xgew==
+  protocol: ftps
+  username: 
+    secure: Aory6UFezi0fpuwaf/ucCw==
+  password:
+    secure: 40zj86TZBM2gnrfJR6tWqg==
+  folder: /var/www/Site1/htdocs/RepeaterWarning
+  on:
+    branch: master
