@@ -1,8 +1,9 @@
 <?php
 // Written by George Carroll
+// updated 10-17-2020
 // 
 // set up database for previous condition record***********************
-include '/var/www/Site1/htdocs/RepeaterWarning/config.php';
+include '/var/www/Site1/htdocs/RepeaterWarning/.sec/config.php';
 	$query = "";
 // Create connection
     $conn = NEW mysqli($host_name, $user_name, $password, $database);
@@ -26,8 +27,8 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $rpt = $row["id"];
         ${'psendmail' . $rpt} = $row["Voltage"];
-        ${'psendmail' . ($rpt+2)} = $row["LastHeard"];
-        ${'psendmail' . ($rpt+4)} = $row["State"];
+        ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
+        ${'psendmail' . ($rpt+6)} = $row["State"];
     }
 } else {
     echo "0 results";
@@ -158,7 +159,7 @@ if ($timeDif3 > 360) {$message6 = "The last time W 5 A U U - 3 heard was " . $ti
 //test W5AUU-1 for power condition
 if ($ponoff1 < 50) {$message7 = "The power at W 5 A U U - 1  off. #" . $ponoff1 . "\n ";$sendmail7 = 1;}
 //test W5AUU-2 for power condition
-if ($ponoff2 > 50) {$message8 = "The power at W 5 A U U - 2  off. #" . $ponoff2 . "\n ";$sendmail8 = 1;}
+if ($ponoff2 < 50) {$message8 = "The power at W 5 A U U - 2  off. #" . $ponoff2 . "\n ";$sendmail8 = 1;}
 // test W5AUU-3 for power condition
 if ($ponoff3 > 100) {$message9 = "The power at W 5 A U U - 3  off. #" . $ponoff3 . "\n ";$sendmail9 = 1;}
 
@@ -200,7 +201,7 @@ if (mysqli_query($conn, $query)){
             echo "ERROR: Could not execute $query. " . mysqli_error($conn);
         }
 //set recipients for text message
-$recipient = '5015140605@vtext.com';//, 5012404779@txt.att.net, 5015487682@vtext.com ';// me and eric initually. Frankie Added
+$recipient = '5015140605@vtext.com, 5012404779@txt.att.net, 5015487682@vtext.com ';// me and eric initually. Frankie Added
 $mark = '5014725646@txt.att.net';
 $david = '5015816543@txt.att.net';
 /*AT&T: number@txt.att.net (SMS), number@mms.att.net (MMS)
@@ -233,6 +234,7 @@ Page Plus: number@vtext.com  */
 $subject = 'Warning';
 $headers = 'from: w5auu@ddse.net';//ddse.net';
 for ($i = 1; $i<=9; $i++) { 
+    echo ${"sendmail" . $i}," - ",${"psendmail" . $i}, "  ";
     if (${'sendmail' . $i} != ${'psendmail' . $i}) {
         if (${'sendmail' . $i} > ${'psendmail' . $i}) {
             if (mail($recipient, $subject, ${'message' . $i}, $headers))
@@ -240,7 +242,7 @@ for ($i = 1; $i<=9; $i++) {
                     echo "Message accepted";
                 }
             //special text for Mark on power off condition only
-       /*     if ($sendmail8 > $psendmail8) {
+            if ($sendmail8 > $psendmail8) {
                 if (mail($mark, $subject, "The power is off at the OEM repeater shack.", $headers))
                 {
                     echo "Message accepted";
@@ -251,7 +253,7 @@ for ($i = 1; $i<=9; $i++) {
                 {
                     echo "Message accepted";
                 }
-            }*/
+            }
         }
 
         // If condition clears send text
