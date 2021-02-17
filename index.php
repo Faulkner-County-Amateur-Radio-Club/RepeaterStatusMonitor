@@ -3,13 +3,14 @@
 // updated 02-16-2021
 // 
 // set up database for previous condition record***********************
-include '/var/www/Site1/htdocs/RepeaterWarning/.sec/config.php';
+include 'config.php';
 	$query = "";
 // Create connection
     $conn = NEW mysqli($host_name, $user_name, $password, $database);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+
 // Read the JSON data**************************************************
 function setmsg($urli) {
     $data = file_get_contents($urli);  // load contents of the page 
