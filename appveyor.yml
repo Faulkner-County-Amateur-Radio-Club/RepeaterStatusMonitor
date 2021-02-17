@@ -5,7 +5,7 @@ deploy:
 - provider: FTP
   host: 
     secure: ZDYooCiUAomCBwZ+71Xgew==
-  protocol: sftp
+  protocol: ftp
   username: 
     secure: Aory6UFezi0fpuwaf/ucCw==
   password:
