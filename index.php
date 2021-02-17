@@ -1,17 +1,16 @@
 <?php
 // Written by George Carroll
-// updated 02-16-2021
-// 
-// set up database for previous condition record***********************
+ 
+// set up database for previous condition record
 include 'config.php';
-	$query = "";
+$query = "";
 // Create connection
-    $conn = NEW mysqli($host_name, $user_name, $password, $database);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+$conn = NEW mysqli($host_name, $user_name, $password, $database);
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
 
-// Read the JSON data**************************************************
+// Read the JSON data
 function setmsg($urli) {
     $data = file_get_contents($urli);  // load contents of the page 
     $object = json_decode($data, true); // parse the JSON into an object
@@ -20,7 +19,8 @@ function setmsg($urli) {
     $volts = floatval($var);
     return array($volts, $var2);
 }
-//Read the data into variables ****************************************
+
+//Read the data into variables 
 $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -34,7 +34,8 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }
-// Initialize varables ***********************************************
+
+// Initialize varables 
 $volts = 0.0;
 $message1 = "";
 $message2 = "";
@@ -63,40 +64,34 @@ $test =0;
 $url1 = "https://api.aprs.fi/api/get?name=W5AUU-1&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 $url2 = "https://api.aprs.fi/api/get?name=W5AUU-2&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 $url3 = "https://api.aprs.fi/api/get?name=W5AUU-3&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
+
 // path to the Telemitry page
 $url4 = "https://aprs.fi/telemetry/W5AUU-1&key=100665.Mj8HjUvXqEHYjrV6";
 $url5 = "https://aprs.fi/telemetry/W5AUU-2&key=100665.Mj8HjUvXqEHYjrV6";
 $url6 = "https://aprs.fi/telemetry/W5AUU-3&key=100665.Mj8HjUvXqEHYjrV6";
+
 // Set voltage test minimum point
 $tripPoint = 11.0;
+
 // Read JSON pages ****************************************************
 
 // read W5AUU-1 jason page 
 $readJSONFile = file_get_contents($url1, true);
 $array = json_decode($readJSONFile,true);
 $timeHeard1 = $array[entries][0][lasttime];
-//echo $timeHeard1 . "  " . time();
-// set time to minuits since last heard
 $timeDif1 = (time() - $timeHeard1)/60; 
-//echo "  " . $timeDif1 . "  ";
 
 // read W5AUU-2 json page
 $readJSONFile = file_get_contents($url2, true);
 $array = json_decode($readJSONFile,true);
 $timeHeard2 = $array[entries][0][lasttime];
-//echo $timeHeard2 . "  " . time();
-// set time to minuits since last heard
 $timeDif2 = (time() - $timeHeard2)/60;
-//echo "  " . $timeDif2 . "  ";
 
 // read W5AUU-2 json page
 $readJSONFile = file_get_contents($url3, true);
 $array = json_decode($readJSONFile,true);
 $timeHeard3 = $array[entries][0][lasttime];
-//echo $timeHeard2 . "  " . time();
-// set time to minuits since last heard
 $timeDif3 = (time() - $timeHeard3)/60;
-//echo "  " . $timeDif2 . "  ";
 
 // read analog ch1 and ch5 W5AUU-1 from telemitry page **********************
 $power = file_get_contents($url4);
@@ -145,8 +140,10 @@ $ponoff3 = number_format(substr($hold,11));
 // message section
 // Test if W5AUU-1 battery voltage below 11 volts
 if ($volts1 < $tripPoint) {$message1 = "The voltage at W 5 A U U - 1 is " . $volts1 . " volts.\n  ";$sendmail1 = 1;}
+
 // Test if W5AUU-2 battery voltage below 11 volts
 if ($volts2 < $tripPoint) {$message2 = "The voltage at W 5 A U U - 2 is " . $volts2 . " volts.\n  ";$sendmail2 = 1;}
+
 // Test if W5AUU-3 battery voltage below 11 volts
 if ($volts3 < $tripPoint) {$message3 = "The voltage at W 5 A U U - 3 is " . $volts3 . " volts.\n  ";$sendmail3 = 1;}
 
@@ -202,7 +199,7 @@ if (mysqli_query($conn, $query)){
             echo "ERROR: Could not execute $query. " . mysqli_error($conn);
         }
 //set recipients for text message
-$recipient = '5015140605@vtext.com, 5012404779@txt.att.net, 5015487682@vtext.com ';// me and eric initually. Frankie Added
+$recipient = '5015140605@vtext.com, 5012404779@txt.att.net, 5015487682@vtext.com ';
 $mark = '5014725646@txt.att.net';
 $david = '5015816543@txt.att.net';
 /*AT&T: number@txt.att.net (SMS), number@mms.att.net (MMS)
@@ -219,17 +216,12 @@ Metro PCS: number@mymetropcs.com (SMS & MMS)
 Boost Mobile: number@sms.myboostmobile.com (SMS), number@myboostmobile.com (MMS)
 Cricket: number@sms.cricketwireless.net (SMS), number@mms.cricketwireless.net (MMS)
 Republic Wireless: number@text.republicwireless.com (SMS)
-
 Google Fi (Project Fi): number@msg.fi.google.com (SMS & MMS)
-
 U.S. Cellular: number@email.uscc.net (SMS), number@mms.uscc.net (MMS)
-
 Ting: number@message.ting.com
 Consumer Cellular: number@mailmymobile.net
-
 C-Spire: number@cspire1.com
 Page Plus: number@vtext.com  */
-
 
 // Send text to George, Eric, and Pat if condition has changed from normal range
 $subject = 'Warning';
@@ -285,7 +277,7 @@ for ($i = 1; $i<=9; $i++) {
 } //for loop 
 // Test for new user
 if ($sendmail10 > $psendmail10) {
-        if (mail('5015816543@txt.att.net' , $subject, 'I have just reset the TNC and the arduino   Thanks ', $headers))
+        if (mail('5015816543@txt.att.net' , $subject, 'I have just reset the TNC and the arduino. Thanks.', $headers))
         {
             echo "Test Message accepted";
         }
