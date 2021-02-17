@@ -1,9 +1,7 @@
 version: 1.0.{build}
 image: Ubuntu1804
 test: off
-
 deploy:
-  debug: true
 - provider: FTP
   host: 
     secure: ZDYooCiUAomCBwZ+71Xgew==
@@ -15,3 +13,4 @@ deploy:
   folder: /var/www/Site1/htdocs/RepeaterWarning
   on:
     branch: main
+  debug: true
