@@ -2,7 +2,7 @@ version: 1.0.{build}
 image: Ubuntu1804
 test: off
 deploy:
-- provider: FTP
+- provider: WebDeploy
   host: 
     secure: ZDYooCiUAomCBwZ+71Xgew==
   protocol: sftp
