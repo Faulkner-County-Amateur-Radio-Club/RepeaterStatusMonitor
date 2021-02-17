@@ -12,5 +12,5 @@ deploy:
   password:
     secure: 40zj86TZBM2gnrfJR6tWqg==
   artifacts:
-  - path: /var/www/Site1/htdocs/RepeaterWarning
+  - path: '/var/www/Site1/htdocs/RepeaterWarning'
   folder: /var/www/Site1/htdocs/RepeaterWarning
