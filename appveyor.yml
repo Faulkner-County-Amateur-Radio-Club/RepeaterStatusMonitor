@@ -1,8 +1,9 @@
 version: 1.0.{build}
 image: Ubuntu1804
 test: off
-debug: true
+
 deploy:
+  debug: true
 - provider: FTP
   host: 
     secure: ZDYooCiUAomCBwZ+71Xgew==
