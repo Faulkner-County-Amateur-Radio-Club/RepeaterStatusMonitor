@@ -2,10 +2,10 @@ version: 1.0.{build}
 image: Ubuntu1804
 test: off
 deploy:
-- provider: SFTP
+- provider: FTP
   host: 
     secure: ZDYooCiUAomCBwZ+71Xgew==
-  protocol: sftp
+  protocol: ftps
   username: 
     secure: Aory6UFezi0fpuwaf/ucCw==
   password:
