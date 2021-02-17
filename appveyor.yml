@@ -5,11 +5,11 @@ deploy:
 - provider: FTP
   host: 
     secure: ZDYooCiUAomCBwZ+71Xgew==
-  protocol: ftp
+  protocol: sftp
   username: 
     secure: Aory6UFezi0fpuwaf/ucCw==
   password:
     secure: 40zj86TZBM2gnrfJR6tWqg==
-  folder: /var/www/Site1/htdocs/RepeaterWarning
+  folder: /var/www/Site1/htdocs/RepeaterWarning/
   on:
     branch: main
