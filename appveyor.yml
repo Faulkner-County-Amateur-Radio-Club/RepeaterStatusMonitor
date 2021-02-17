@@ -1,7 +1,6 @@
 version: 1.0.{build}
 image: Ubuntu1804
 test: off
-build: script
 deploy:
 - provider: FTP
   host: 
@@ -12,6 +11,3 @@ deploy:
   password:
     secure: 40zj86TZBM2gnrfJR6tWqg==
   folder: /var/www/Site1/htdocs/RepeaterWarning
-  on:
-    branch: main
-  debug: true
