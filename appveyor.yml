@@ -1,6 +1,7 @@
 version: 1.0.{build}
 image: Ubuntu
 test: off
+build: off
 deploy:
 - provider: FTP
   host: 
