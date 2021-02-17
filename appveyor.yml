@@ -9,7 +9,7 @@ deploy:
   username: 
     secure: Aory6UFezi0fpuwaf/ucCw==
   password:
-    secure: 40zj86TZBM2gnrfJR6tWqg==
+    secure: rQIwR2O4HgOxWhu2pavTcw==
   folder: /var/www/Site1/htdocs/RepeaterWarning/
   on:
     branch: main
