@@ -176,30 +176,28 @@ if (mysqli_query($conn, $query)){
 $repeater = 2;
 $query = "REPLACE INTO PreviousState (id , State,  Voltage, LastHeard) VALUES ('" . $repeater . "', '" . $sendmail8 . "', '" . $sendmail2 . "', '" . $sendmail5 . "') ;";
 
-if (mysqli_query($conn, $query)){
-            echo "Records inserted successfully.";
-        } else{
-            echo "ERROR: Could not execute $query. " . mysqli_error($conn);
-        }
+if (mysqli_query($conn, $query)) {
+	echo "Records inserted successfully.";
+} else{
+	echo "ERROR: Could not execute $query. " . mysqli_error($conn);
+}
 
 $repeater = 3;
 $query = "REPLACE INTO PreviousState (id , State,  Voltage, LastHeard) VALUES ('" . $repeater . "', '" . $sendmail9 . "', '" . $sendmail3 . "', '" . $sendmail6 . "') ;";
 
-if (mysqli_query($conn, $query)){
-            echo "Records inserted successfully.";
-        } else{
-            echo "ERROR: Could not execute $query. " . mysqli_error($conn);
-        }
+if (mysqli_query($conn, $query)) {
+	echo "Records inserted successfully.";
+} else{
+	echo "ERROR: Could not execute $query. " . mysqli_error($conn);
+}
 
 $query = "REPLACE INTO PreviousState (id , State,  Voltage, LastHeard) VALUES ('4', '" . $test . "', '0', '0') ;";
 
-if (mysqli_query($conn, $query)){
-            echo "Records inserted successfully.";
-        } else{
-            echo "ERROR: Could not execute $query. " . mysqli_error($conn);
-        }
-//get recipients for text message
-include 'recipients.php';
+if (mysqli_query($conn, $query)) {
+	echo "Records inserted successfully.";
+} else{
+	echo "ERROR: Could not execute $query. " . mysqli_error($conn);
+}
 
 // Send text to George, Eric, and Pat if condition has changed from normal range
 $subject = 'Warning';
