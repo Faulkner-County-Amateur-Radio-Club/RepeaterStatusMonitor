@@ -67,13 +67,14 @@ class Repeater {
 		$this->tempurature = number_format(substr($match[0],11));
 	}
 	function toString() {
-		echo "<h1>$this->name - $this->frequency</h1>";
-		echo "Reported in " . round($this->lastReportedMinutesAgo) . " minutes ago<br>";
-		echo "Status message: $this->status<br>";
-		echo "Power is on: ";
-		echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
-		echo "Voltage: $this->voltage<br>";
-		echo "Tempurature: " . $this->tempurature . "&deg;F";
+		$returnVal = "";
+		$returnVal += "<h1>$this->name - $this->frequency</h1>";
+		$returnVal += "Reported in " . round($this->lastReportedMinutesAgo) . " minutes ago<br>";
+		$returnVal += "Status message: $this->status<br>";
+		$returnVal += "Power is on: ";
+		$returnVal += $this->powerIsOn ? 'yes<br>' : 'no<br>';
+		$returnVal += "Voltage: $this->voltage<br>";
+		$returnVal += "Tempurature: " . $this->tempurature . "&deg;F";
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
@@ -100,12 +101,12 @@ class Repeater {
 }
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97", 1, 5, 50, 2);
-$w5auu1->toString();
+echo $w5auu1->toString();
 
 $w5auu2 = new Repeater("W5AUU-2", "147.03", 1, 5, 50, 2);
-$w5auu2->toString();
+echo $w5auu2->toString();
 
 $w5auu3 = new Repeater("W5AUU-3", "146.625", 1, 3, 100, 2);
-$w5auu3->toString();
+echo $w5auu3->toString();
 
 ?>
