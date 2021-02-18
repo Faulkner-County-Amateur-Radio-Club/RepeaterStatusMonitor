@@ -4,6 +4,7 @@ include 'config.php';
 
 class Repeater {
 	public $name;
+	public $description;
 	public $frequency;
 	public $lastReportedTime;
 	public $lastReportedMinutesAgo;
@@ -19,8 +20,9 @@ class Repeater {
 	private $telemetryGridPowerThreshold;
 	private $telemetryTempuratureChannel;
 
-	function __construct($name, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
+	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 			$this->name = $name;
+			$this->description = $description;
 			$this->frequency = $frequency;
 			$this->telemetryVoltageChannel = $telemetryVoltageChannel;
 			$this->telemetryGridPowerStatusChannel = $telemetryGridPowerStatusChannel;
@@ -65,13 +67,35 @@ class Repeater {
 		$this->tempurature = number_format(substr($match[0],11));
 	}
 	function toString() {
-			echo "<h1>$this->name - $this->frequency</h1>";
-			echo "Reported in " . round($this->lastReportedMinutesAgo) . " minutes ago<br>";
-			echo "Status message: $this->status<br>";
-			echo "Power is on: ";
-			echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
-			echo "Voltage: $this->voltage<br>";
-			echo "Tempurature: " . $this->tempurature . "&deg;F";
+		echo "<h1>$this->name - $this->frequency</h1>";
+		echo "Reported in " . round($this->lastReportedMinutesAgo) . " minutes ago<br>";
+		echo "Status message: $this->status<br>";
+		echo "Power is on: ";
+		echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
+		echo "Voltage: $this->voltage<br>";
+		echo "Tempurature: " . $this->tempurature . "&deg;F";
+	}
+	function doHealthCheck() {
+		// Recipients are defined in the config.php
+		
+		if (!$this->powerIsOn) {
+			$poorHealthMessage += "Power is out. ";
+			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
+		}
+		
+		if ($this->voltage < $this->telemetryVoltageThreshold) {
+			$poorHealthMessage += "Battery voltage is low. ";
+		}
+		
+		if ($this->$lastReportedMinutesAgo > 360) {
+			$poorHealthMessage += "Hasn't reported in over 6 hours. ";
+		}
+		
+		if ($poorHealthMessage != "") {
+			$poorHealthMessage = "Problems at the $this->description: " . $poorHealthMessage;
+			$sendAlertTo += $recipients["typicalSuspects"];
+			mail($sendAlertTo, "", $poorHealthMessage, 'from: '. $sendFrom);
+		}
 	}
 }
 
