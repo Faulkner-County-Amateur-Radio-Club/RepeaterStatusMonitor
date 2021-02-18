@@ -69,7 +69,7 @@ class Repeater {
                 echo "Power is on: ";
 				echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
                 echo "Voltage: $this->voltage<br>";
-				echo "Tempurature: " . $this->tempurature . "&deg;F;
+				echo "Tempurature: " . $this->tempurature . "&deg;F";
         }
 }
 
