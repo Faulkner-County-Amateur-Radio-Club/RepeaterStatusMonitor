@@ -75,6 +75,7 @@ class Repeater {
 		$returnVal += $this->powerIsOn ? 'yes<br>' : 'no<br>';
 		$returnVal += "Voltage: $this->voltage<br>";
 		$returnVal += "Tempurature: " . $this->tempurature . "&deg;F";
+		return $returnVal;
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
