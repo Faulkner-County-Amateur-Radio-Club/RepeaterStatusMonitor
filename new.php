@@ -7,6 +7,7 @@ class Repeater {
         public $lastReportedTime;
         public $lastReportedMinutesAgo;
         public $voltage;
+		public $tempurature;
         public $status;
         public $powerIsOn;
 		private $powerValue;
@@ -15,14 +16,16 @@ class Repeater {
 		private $telemetryVoltageThreshold;
         private $telemetryGridPowerStatusChannel;
 		private $telemetryGridPowerThreshold;
+		private $telemetryTempuratureChannel;
 
-        function __construct($name, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold) {
+        function __construct($name, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
                 $this->name = $name;
                 $this->telemetryVoltageChannel = $telemetryVoltageChannel;
                 $this->telemetryGridPowerStatusChannel = $telemetryGridPowerStatusChannel;
 				$this->telemetryGridPowerThreshold = $telemetryGridPowerThreshold;
 				$this->powerIsOn = true; // Assume it's on
 				$this->telemetryVoltageThreshold = 11.0;
+				$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
                 $this->loadData();
         }
         function loadData() {
@@ -54,14 +57,19 @@ class Repeater {
 					$this->powerIsOn = false;
 				}
 			}
+			
+			// tempurature
+			preg_match("/Channel\s" . $this->telemetryTempuratureChannel . "\:\s[0-9]+/", $this->page, $match);
+			$this->tempurature = number_format(substr($match[0],11));
         }
         function toString() {
                 echo "<h1>$this->name</h1>";
-                echo "Reported in $this->lastReportedMinutesAgo minutes ago<br>";
+                echo "Reported in " . round($this->lastReportedMinutesAgo) . " minutes ago<br>";
                 echo "Status message: $this->status<br>";
                 echo "Power is on: ";
 				echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
                 echo "Voltage: $this->voltage<br>";
+				echo "Tempurature: $this->tempurature";
         }
 }
 
