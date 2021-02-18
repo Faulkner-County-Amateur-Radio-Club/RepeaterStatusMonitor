@@ -53,7 +53,7 @@ class Repeater {
 				}
 			}
 			else {
-				if ($this->powerStatus < 50) {
+				if ($this->powerValue < 50) {
 					$this->powerIsOn = false;
 				}
 			}
