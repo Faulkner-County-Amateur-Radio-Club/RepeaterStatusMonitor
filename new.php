@@ -73,13 +73,13 @@ class Repeater {
         }
 }
 
-$w5auu1 = new Repeater("W5AUU-1", 1, 5, 50);
+$w5auu1 = new Repeater("W5AUU-1", 1, 5, 50, 2);
 $w5auu1->toString();
 
-$w5auu2 = new Repeater("W5AUU-2", 1, 5, 50);
+$w5auu2 = new Repeater("W5AUU-2", 1, 5, 50, 2);
 $w5auu2->toString();
 
-$w5auu3 = new Repeater("W5AUU-3", 1, 3, 100);
+$w5auu3 = new Repeater("W5AUU-3", 1, 3, 100, 2);
 $w5auu3->toString();
 
 ?>
