@@ -198,34 +198,12 @@ if (mysqli_query($conn, $query)){
         } else{
             echo "ERROR: Could not execute $query. " . mysqli_error($conn);
         }
-//set recipients for text message
-$recipient = '5015140605@vtext.com, 5012404779@txt.att.net, 5015487682@vtext.com ';
-$mark = '5014725646@txt.att.net';
-$david = '5015816543@txt.att.net';
-/*AT&T: number@txt.att.net (SMS), number@mms.att.net (MMS)
-T-Mobile: number@tmomail.net (SMS & MMS)
-Verizon: number@vtext.com (SMS), number@vzwpix.com (MMS)
-Sprint: number@messaging.sprintpcs.com (SMS), number@pm.sprint.com (MMS)
-Xfinity Mobile: number@vtext.com (SMS), number@mypixmessages.com (MMS)
-Virgin Mobile: number@vmobl.com (SMS), number@vmpix.com (MMS)
-Tracfone: number@mmst5.tracfone.com (MMS)
-Simple Mobile: number@smtext.com (SMS)
-Mint Mobile: number@mailmymobile.net (SMS)
-Red Pocket: number@vtext.com (SMS)
-Metro PCS: number@mymetropcs.com (SMS & MMS)
-Boost Mobile: number@sms.myboostmobile.com (SMS), number@myboostmobile.com (MMS)
-Cricket: number@sms.cricketwireless.net (SMS), number@mms.cricketwireless.net (MMS)
-Republic Wireless: number@text.republicwireless.com (SMS)
-Google Fi (Project Fi): number@msg.fi.google.com (SMS & MMS)
-U.S. Cellular: number@email.uscc.net (SMS), number@mms.uscc.net (MMS)
-Ting: number@message.ting.com
-Consumer Cellular: number@mailmymobile.net
-C-Spire: number@cspire1.com
-Page Plus: number@vtext.com  */
+//get recipients for text message
+include 'recipients.php';
 
 // Send text to George, Eric, and Pat if condition has changed from normal range
 $subject = 'Warning';
-$headers = 'from: w5auu@ddse.net';//ddse.net';
+$headers = 'from: $sendFrom';//ddse.net';
 for ($i = 1; $i<=9; $i++) { 
     echo ${"sendmail" . $i}," - ",${"psendmail" . $i}, "  ";
     if (${'sendmail' . $i} != ${'psendmail' . $i}) {
@@ -274,10 +252,12 @@ for ($i = 1; $i<=9; $i++) {
 
         }
     }
-} //for loop 
+} 
+//for loop 
+
 // Test for new user
 if ($sendmail10 > $psendmail10) {
-        if (mail('5015816543@txt.att.net' , $subject, 'I have just reset the TNC and the arduino. Thanks.', $headers))
+        if (mail('number@txt.att.net' , $subject, 'I have just reset the TNC and the arduino. Thanks.', $headers))
         {
             echo "Test Message accepted";
         }
