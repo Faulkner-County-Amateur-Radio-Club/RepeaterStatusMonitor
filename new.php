@@ -1,20 +1,3 @@
-<html>
-	<head>
-		<title>Repeater Status Monitor</title>
-		<style>
-			span { 
-				color: darkred; 
-				animation: blinker 1s linear infinite;
-			}
-
-			@keyframes blinker {
-			  50% {
-				opacity: 0;
-			  }
-			}
-		</style>
-	</head>
-	<body>
 <?php
 
 include 'config.php';
@@ -36,7 +19,6 @@ class Repeater {
 	private $telemetryGridPowerStatusChannel;
 	private $telemetryGridPowerThreshold;
 	private $telemetryTempuratureChannel;
-	private $poorHealthMessage;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 			$this->name = $name;
@@ -49,7 +31,6 @@ class Repeater {
 			$this->telemetryVoltageThreshold = 11.0;
 			$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 			$this->loadData();
-			$this->doHealthCheck();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -93,34 +74,29 @@ class Repeater {
 		$returnVal += "Power is on: ";
 		$returnVal += $this->powerIsOn ? 'yes<br>' : 'no<br>';
 		$returnVal += "Voltage: $this->voltage<br>";
-		$returnVal += "Tempurature: " . $this->tempurature . "&deg;F<br>";
-		
-		if ($this->poorHealthMessage != ""){
-			$returnVal += "<span>" . $this->poorHealthMessage . " A report of this has been sent.</span>";
-		}
-		
+		$returnVal += "Tempurature: " . $this->tempurature . "&deg;F";
 		return $returnVal;
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
 		
 		if (!$this->powerIsOn) {
-			$this->poorHealthMessage += "Power is out. ";
+			$poorHealthMessage += "Power is out. ";
 			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
 		}
 		
 		if ($this->voltage < $this->telemetryVoltageThreshold) {
-			$this->poorHealthMessage += "Battery voltage is low. ";
+			$poorHealthMessage += "Battery voltage is low. ";
 		}
 		
 		if ($this->$lastReportedMinutesAgo > 360) {
-			$this->poorHealthMessage += "Hasn't reported in over 6 hours. ";
+			$poorHealthMessage += "Hasn't reported in over 6 hours. ";
 		}
 		
-		if ($this->poorHealthMessage != "") {
-			$this->poorHealthMessage = "Problems at the $this->description: " . $this->poorHealthMessage;
+		if ($poorHealthMessage != "") {
+			$poorHealthMessage = "Problems at the $this->description: " . $poorHealthMessage;
 			$sendAlertTo += $recipients["typicalSuspects"];
-			mail($sendAlertTo, "", $this->poorHealthMessage, 'from: '. $sendFrom);
+			mail($sendAlertTo, "", $poorHealthMessage, 'from: '. $sendFrom);
 		}
 	}
 }
@@ -135,5 +111,3 @@ $w5auu3 = new Repeater("W5AUU-3", "146.625", 1, 3, 100, 2);
 echo $w5auu3->toString();
 
 ?>
-	</body>
-</html>
