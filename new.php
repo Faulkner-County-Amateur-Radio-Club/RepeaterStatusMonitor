@@ -2,8 +2,6 @@
 
 include 'config.php';
 
-$minimumAcceptableVoltage = 11.0;
-
 class Repeater {
         public $name;
         public $lastReportedTime;
@@ -14,6 +12,7 @@ class Repeater {
 		private $powerValue;
         private $telemetryData;
         private $telemetryVoltageChannel;
+		private $telemetryVoltageThreshold;
         private $telemetryGridPowerStatusChannel;
 		private $telemetryGridPowerThreshold;
 
@@ -23,6 +22,7 @@ class Repeater {
                 $this->telemetryGridPowerStatusChannel = $telemetryGridPowerStatusChannel;
 				$this->telemetryGridPowerThreshold = $telemetryGridPowerThreshold;
 				$this->powerIsOn = true; // Assume it's on
+				$this->telemetryVoltageThreshold = 11.0;
                 $this->loadData();
         }
         function loadData() {
@@ -54,13 +54,13 @@ class Repeater {
 					$this->powerIsOn = false;
 				}
 			}
-	
         }
         function toString() {
                 echo "<h1>$this->name</h1>";
                 echo "Reported in $this->lastReportedMinutesAgo minutes ago<br>";
                 echo "Status message: $this->status<br>";
-                echo "Power is on: $this->powerIsOn<br>";
+                echo "Power is on: ";
+				echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
                 echo "Voltage: $this->voltage<br>";
         }
 }
