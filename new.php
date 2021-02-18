@@ -125,7 +125,7 @@ class Repeater {
 	}
 }
 
-$w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
+$w5auu1 = new Repeater("W5AUU-1", "146.97 repeater" "146.97", 1, 5, 50, 2);
 echo $w5auu1->toString();
 
 $w5auu2 = new Repeater("W5AUU-2", "OEM repeater shack", "147.03", 1, 5, 50, 2);
