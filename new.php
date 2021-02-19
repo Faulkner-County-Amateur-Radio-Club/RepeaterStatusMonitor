@@ -116,13 +116,13 @@ class Repeater {
 			
 			if ($_GET['test'] != "") { 
 				$this->poorHealthMessage = "*TESTING* " . $this->poorHealthMessage; 
-				$this->sendAlertTo = $this->recipients["testMode"];
+				$sendAlertTo = $this->recipients["testMode"];
 			}
 			else {
-				$this->sendAlertTo .= $recipients["typicalSuspects"];
+				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-			echo $this->sendAlertTo;
-			if (mail($this->sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
+			echo $sendAlertTo;
+			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
 		}
