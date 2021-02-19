@@ -40,6 +40,7 @@ class Repeater {
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
+        $yhis->RetrevePrevious();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -81,6 +82,7 @@ class Repeater {
 		}
 		
 		$this->doHealthCheck();
+        
 	}
 	function toString() {
 		echo "<h1>$this->name - $this->frequency</h1>";
@@ -127,6 +129,22 @@ class Repeater {
 			}else{echo "ERROR";};
 		}
 	}
+    function RetrevePrevious() {
+        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $rpt = $row["id"];
+                ${'psendmail' . $rpt} = $row["Voltage"];
+                ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
+                ${'psendmail' . ($rpt+6)} = $row["State"];
+            }
+        else {
+            echo "0 results";
+        }
+
+    }
 }
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
