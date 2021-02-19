@@ -132,9 +132,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        for ($i = 1; $i<=9; $i++) {
-                echo $psendmail1.' test ';
-            }
+        
 	}
     function RetrevePrevious() {
         $query = "";
@@ -153,7 +151,9 @@ class Repeater {
                 ${'psendmail' . $rpt} = $row["Voltage"];
                 ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
                 ${'psendmail' . ($rpt+6)} = $row["State"];
+                
             }
+            echo $rpt . psendmail1 . psendmail4 . psendmail7;
         }
         else {
             echo "0 results";
