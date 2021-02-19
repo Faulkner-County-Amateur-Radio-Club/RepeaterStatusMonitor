@@ -92,21 +92,21 @@ class Repeater {
 		// Recipients are defined in the config.php
 		
 		if (!$this->powerIsOn) {
-			$this->poorHealthMessage += "Power is out. ";
+			$this->poorHealthMessage .= "Power is out. ";
 			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
 		}
 		
 		if ($this->voltage < $this->telemetryVoltageThreshold) {
-			$this->poorHealthMessage += "Battery voltage is low. ";
+			$this->poorHealthMessage .= "Battery voltage is low. ";
 		}
 		
 		if ($this->lastReportedMinutesAgo > 360) {
-			$this->poorHealthMessage += "Hasn't reported in over 6 hours. ";
+			$this->poorHealthMessage .= "Hasn't reported in over 6 hours. ";
 		}
 		
 		if ($this->poorHealthMessage != "") {
 			$this->poorHealthMessage = "Problems at the $this->description: " . $this->poorHealthMessage;
-			$sendAlertTo += $recipients["typicalSuspects"];
+			$sendAlertTo .= $recipients["typicalSuspects"];
 			mail($sendAlertTo, "", $this->poorHealthMessage, 'from: '. $sendFrom);
 		}
 	}
