@@ -130,7 +130,7 @@ class Repeater {
 		}
 	}
     function RetrevePrevious() {
-        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+       /* $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             // output data of each row
@@ -144,7 +144,7 @@ class Repeater {
         else {
             echo "0 results";
         }
-        
+        */
     }
 }
 
