@@ -18,6 +18,15 @@ class Repeater {
 	private $telemetryTempuratureChannel;
 	private $telemetryVoltageChannel;
 	private $telemetryVoltageThreshold;
+    private $psendmail1;
+    private $psendmail2;
+    private $psendmail3;
+    private $psendmail4;
+    private $psendmail5;
+    private $psendmail6;
+    private $psendmail7;
+    private $psendmail8;
+    private $psendmail9;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 		
@@ -97,7 +106,7 @@ class Repeater {
 			echo "<br><span>" . $this->poorHealthMessage . "</span>";
 		}
 	}
-	public function doHealthCheck() {
+	function doHealthCheck() {
 		// Recipients are defined in the config.php
 		
 		if (!$this->powerIsOn) {
@@ -134,7 +143,7 @@ class Repeater {
 		}
         echo $rpt . ${'psendmail' . $rpt} . ${'psendmail' . ($rpt+3)} . ${'psendmail' . ($rpt+6)};
 	}
-    public function RetrevePrevious() {
+    function RetrevePrevious() {
         $query = "";
         // Create connection
         
