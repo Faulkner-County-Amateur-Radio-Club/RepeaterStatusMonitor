@@ -22,24 +22,25 @@ class Repeater {
 	private $telemetryVoltageThreshold;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
-			$this->name = $name;
-			$this->description = $description;
-			$this->frequency = $frequency;
-			$this->telemetryVoltageChannel = $telemetryVoltageChannel;
-			$this->telemetryGridPowerStatusChannel = $telemetryGridPowerStatusChannel;
-			$this->telemetryGridPowerThreshold = $telemetryGridPowerThreshold;
-			$this->powerIsOn = true; // Assume it's on
-			$this->telemetryVoltageThreshold = 11.0;
-			$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
-			$this->loadData();
+		$this->name = $name;
+		$this->description = $description;
+		$this->frequency = $frequency;
+		$this->telemetryVoltageChannel = $telemetryVoltageChannel;
+		$this->telemetryGridPowerStatusChannel = $telemetryGridPowerStatusChannel;
+		$this->telemetryGridPowerThreshold = $telemetryGridPowerThreshold;
+		$this->powerIsOn = true; // Assume it's on
+		$this->telemetryVoltageThreshold = 11.0;
+		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
+		$this->loadData();
+		$this->doHealthCheck();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 		$jsonData = file_get_contents($jsonUrl); 
 		$jsonObject = json_decode($jsonData, true);
-		$this->timeLastReported = $jsonObject[entries][0][lasttime];
+		$this->timeLastReported = $jsonObject["entries"][0]["lasttime"];
 		$this->lastReportedMinutesAgo = (time() - $this->timeLastReported)/60; 
-		$this->status = $jsonObject[entries][0][status];
+		$this->status = $jsonObject["entries"][0]["status"];
 
 		$this->pageURL = "https://aprs.fi/telemetry/" . $this->name . "&key=100665.Mj8HjUvXqEHYjrV6";
 		$this->page = file_get_contents($this->pageURL,true);
