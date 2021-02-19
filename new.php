@@ -3,22 +3,23 @@
 include 'config.php';
 
 class Repeater {
-	public $name;
 	public $description;
-	public $frequency;
-	public $lastReportedTime;
 	public $lastReportedMinutesAgo;
-	public $voltage;
-	public $tempurature;
-	public $status;
+	public $lastReportedTime;
+	public $frequency;
+	public $name;
 	public $powerIsOn;
+	public $status;
+	public $tempurature;
+	public $voltage;
+	private $poorHealthMessage;
 	private $powerValue;
 	private $telemetryData;
-	private $telemetryVoltageChannel;
-	private $telemetryVoltageThreshold;
 	private $telemetryGridPowerStatusChannel;
 	private $telemetryGridPowerThreshold;
 	private $telemetryTempuratureChannel;
+	private $telemetryVoltageChannel;
+	private $telemetryVoltageThreshold;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 			$this->name = $name;
@@ -79,22 +80,22 @@ class Repeater {
 		// Recipients are defined in the config.php
 		
 		if (!$this->powerIsOn) {
-			$poorHealthMessage += "Power is out. ";
+			$this->poorHealthMessage += "Power is out. ";
 			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
 		}
 		
 		if ($this->voltage < $this->telemetryVoltageThreshold) {
-			$poorHealthMessage += "Battery voltage is low. ";
+			$this->poorHealthMessage += "Battery voltage is low. ";
 		}
 		
 		if ($this->$lastReportedMinutesAgo > 360) {
-			$poorHealthMessage += "Hasn't reported in over 6 hours. ";
+			$this->poorHealthMessage += "Hasn't reported in over 6 hours. ";
 		}
 		
-		if ($poorHealthMessage != "") {
-			$poorHealthMessage = "Problems at the $this->description: " . $poorHealthMessage;
+		if ($this->poorHealthMessage != "") {
+			$this->poorHealthMessage = "Problems at the $this->description: " . $this->poorHealthMessage;
 			$sendAlertTo += $recipients["typicalSuspects"];
-			mail($sendAlertTo, "", $poorHealthMessage, 'from: '. $sendFrom);
+			mail($sendAlertTo, "", $this->poorHealthMessage, 'from: '. $sendFrom);
 		}
 	}
 }
