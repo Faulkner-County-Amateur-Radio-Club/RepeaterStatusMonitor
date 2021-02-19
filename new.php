@@ -168,7 +168,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        else{echo $previousMailState1;}
+        //else{echo $previousMailState1;}
         
 	}
     
