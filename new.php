@@ -25,7 +25,7 @@ function RetrevePrevious() {
     else {
         echo "0 results";
     }
-    return $previousMailState1;
+    return array($previousMailState1,$previousMailState2);
 }
 class Repeater {
 	public $description;
