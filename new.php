@@ -113,7 +113,7 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-			
+			echo "sending text";
 			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: ". $sendFrom)){
 				echo "message accepted";
 			}else{echo "ERROR";};
