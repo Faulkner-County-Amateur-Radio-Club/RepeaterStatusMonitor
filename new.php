@@ -163,12 +163,12 @@ class Repeater {
                 $this->{'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
-            echo $this->psendmail1 ;
+            
         }
         else {
             echo "0 results";
         }
-        
+        echo $this->psendmail1 ;
     }
 }
 
