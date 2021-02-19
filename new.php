@@ -105,7 +105,7 @@ class Repeater {
 		
 		if ($this->poorHealthMessage != "") {
 			$this->poorHealthMessage = "Problems at the $this->description: " . $this->poorHealthMessage;
-			if (&_GET['test'] != "") { 
+			if ($_GET['test'] != "") { 
 				$this->poorHealthMessage = "*TESTING* " . $this->poorHealthMessage; 
 			}
 			$sendAlertTo .= $recipients["typicalSuspects"];
