@@ -107,6 +107,8 @@ class Repeater {
 		}
 	}
 	function doHealthCheck() {
+		global $recipients;
+		
 		// Recipients are defined in the config.php
 		$currentStatePower = 1;
 		$currentStateBattery = 1;
