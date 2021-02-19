@@ -18,14 +18,14 @@ function RetrevePrevious() {
             ${'previousMailState' . $rpt} = $row["Voltage"];
             ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
             ${'previousMailState' . ($rpt+6)} = $row["State"];
-
+            
         }
 
     }
     else {
         echo "0 results";
     }
-    //return $previousMailState1, $previousMailState2, $previousMailState3, $previousMailState4, $previousMailState5, $previousMailState6, $previousMailState7, $previousMailState8, $previousMailState9;
+    echo $previousMailState1;
 }
 class Repeater {
 	public $description;
