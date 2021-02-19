@@ -23,7 +23,11 @@ class Repeater {
 		
 		include "./config.php";
         	$this->recipient = $recipient;
-		$this->sendFrom =$sendFrom;
+            $this->sendFrom = $sendFrom;
+            $this->host_name = $host_name;
+            $this->user_name = $user_name;
+            $this->password = $password;
+            $this->database = $database;
 		
 		$this->name = $name;
 		$this->description = $description;
