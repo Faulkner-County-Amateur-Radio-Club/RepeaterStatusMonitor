@@ -132,7 +132,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        
+        echo $rpt . ${'psendmail' . $rpt} . ${'psendmail' . ($rpt+3)} . ${'psendmail' . ($rpt+6)};
 	}
     function RetrevePrevious() {
         $query = "";
@@ -153,7 +153,7 @@ class Repeater {
                 ${'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
-            echo $rpt . ${'psendmail' . $rpt} . ${'psendmail' . ($rpt+3)} . ${'psendmail' . ($rpt+6)};
+            
         }
         else {
             echo "0 results";
