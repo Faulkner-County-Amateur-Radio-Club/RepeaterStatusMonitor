@@ -159,9 +159,11 @@ class Repeater {
 				$this->poorHealthMessage .= "Repeater is reporting again. ";
 			}
 			
-			$sendAlertTo .= $recipients["typicalSuspects"];
-			if (!mail($sendAlertTo, "", "Good news! " . $this->poorHealthMessage, "from: w5auu@ddse.net")) {
-				echo "Error sending email.";
+			if ($this->poorHealthMessage != "") {
+				$sendAlertTo .= $recipients["typicalSuspects"];
+				if (!mail($sendAlertTo, "", "Good news! " . $this->poorHealthMessage, "from: w5auu@ddse.net")) {
+					echo "Error sending email.";
+				}
 			}
 			$this->poorHealthMessage = "";
 		}
