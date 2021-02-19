@@ -75,6 +75,10 @@ class Repeater {
 		echo $this->powerIsOn ? 'yes<br>' : 'no<br>';
 		echo "Voltage: $this->voltage<br>";
 		echo "Tempurature: " . $this->tempurature . "&deg;F";
+		
+		if ($this->poorHealthMessage != "") {
+			echo "<span>" . $this->poorHealthMessage . "</span>";
+		}
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
@@ -115,7 +119,7 @@ $w5auu3 = new Repeater("W5AUU-3", "Greenbriar repeater shack", "146.625", 1, 3, 
 
 			@keyframes blinker {
 			  50% {
-				opacity: 0;
+				opacity: 0.2;
 			  }
 			}
 		</style>
