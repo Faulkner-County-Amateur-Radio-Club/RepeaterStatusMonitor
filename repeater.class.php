@@ -173,7 +173,6 @@ class Repeater {
 		}
 		$sql = "Update repeaterState set powerOn=$currentStatePower,batteryGood=$currentStateBattery,reportingOnTime=$currentStateTime where repeater='$this->name';";
 		$result = $connecton->query($sql);
-		$result -> free_result();
 		$connecton -> close();
 	}
 }
