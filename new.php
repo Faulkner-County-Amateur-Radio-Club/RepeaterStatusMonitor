@@ -28,6 +28,7 @@ class Repeater {
             $this->user_name = $user_name;
             $this->password = $password;
             $this->database = $database;
+            $this->recipients = $recipients;
 		
 		$this->name = $name;
 		$this->description = $description;
@@ -120,8 +121,8 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-			echo $this->recipient;
-			if (mail($this->recipient, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
+			echo $this->recipients['testMode'];
+			if (mail($this->recipients['testMode'], "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
 		}
