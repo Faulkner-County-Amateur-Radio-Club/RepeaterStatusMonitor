@@ -157,10 +157,10 @@ class Repeater {
 			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
-            
+            */
 		}
         //else{echo $previousMailState1;}
-        */
+        
 	}
     
 }
