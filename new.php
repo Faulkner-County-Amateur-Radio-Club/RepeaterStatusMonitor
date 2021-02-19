@@ -67,6 +67,12 @@ class Repeater {
 		// tempurature
 		preg_match("/Channel\s" . $this->telemetryTempuratureChannel . "\:\s[0-9]+/", $this->page, $match);
 		$this->tempurature = number_format(substr($match[0],11));
+		
+		if (echo $_GET['test'] != "") {
+			$this->voltage = 0;
+			$this->lastReportedMinutesAgo = 999;
+			$this->poorHealthMessage = "*TESTING* ";
+		}
 	}
 	function toString() {
 		echo "<h1>$this->name - $this->frequency</h1>";
