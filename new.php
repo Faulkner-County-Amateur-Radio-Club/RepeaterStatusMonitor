@@ -85,7 +85,7 @@ class Repeater {
 		echo "Tempurature: " . $this->tempurature . "&deg;F";
 		
 		if ($this->poorHealthMessage != "") {
-			echo "<span>" . $this->poorHealthMessage . "</span>";
+			echo "<br><span>" . $this->poorHealthMessage . "</span>";
 		}
 	}
 	function doHealthCheck() {
@@ -114,7 +114,7 @@ class Repeater {
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
 $w5auu2 = new Repeater("W5AUU-2", "OEM repeater shack", "147.03", 1, 5, 50, 2);
-$w5auu3 = new Repeater("W5AUU-3", "Greenbriar repeater shack", "146.625", 1, 3, 100, 2);
+$w5auu3 = new Repeater("W5AUU-3", "Greenbrier repeater shack", "146.625", 1, 3, 100, 2);
 
 ?><html>
 	<head>
