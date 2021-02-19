@@ -3,29 +3,25 @@
 require "config.php";
 require "repeater.class.php";
 
-function RetrievePrevious() {
-    $query = "";
+function GetPreviousRepeaterStatus($repeaterName) {
     // Create connection
-
-    $conn = NEW mysqli($host_name, $user_name, $password, $database);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    $connecton = new mysqli($database::address, $database::username, $database::password, $database::schema);
+    if ($connecton->connect_error) {
+        die("Database connection failed: " . $connecton->connect_error);
     }
-    $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            $rpt = $row["id"];
-            ${'previousMailState' . $rpt} = $row["Voltage"];
-            ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-            ${'previousMailState' . ($rpt+6)} = $row["State"];
-        }
-    }
-    else {
-        echo "0 results";
-    }
-    return array($previousMailState1,$previousMailState2);
+	
+    $sql = "Select powerOn,batteryGood,reportingOnTime from repeaterState where repeater='$repeaterName'";
+	
+    $result = $connecton->query($sql);
+	while($row = $result->fetch_assoc()) {
+		$previousStatePower = $row["powerOn"];
+		$previousStateBattery = $row["batteryGood"];
+		$previousStateTime = $row["reportingOnTime"];
+	}
+	$result -> free_result();
+	$connecton -> close();
+	
+    echo "Previous state of $repeaterName was $previousStatePower,$previousStateBattery,$previousStateTime;"
 }
 
 
