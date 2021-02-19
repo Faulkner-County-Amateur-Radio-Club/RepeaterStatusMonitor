@@ -1,5 +1,30 @@
 <?php
-
+function RetrevePrevious() {
+        $query = "";
+        // Create connection
+        
+        $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $rpt = $row["id"];
+                $this->{'previousMailState' . $rpt} = $row["Voltage"];
+                $this->{'previousMailState' . ($rpt+3)} = $row["LastHeard"];
+                $this->{'psendmail' . ($rpt+6)} = $row["State"];
+                
+            }
+            
+        }
+        else {
+            echo "0 results";
+        }
+        
+    }
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
@@ -145,32 +170,7 @@ class Repeater {
         else{echo $this->psendmail1 ;}
         
 	}
-    function RetrevePrevious() {
-        $query = "";
-        // Create connection
-        
-        $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                $rpt = $row["id"];
-                $this->{'previousMailState' . $rpt} = $row["Voltage"];
-                $this->{'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-                $this->{'psendmail' . ($rpt+6)} = $row["State"];
-                
-            }
-            
-        }
-        else {
-            echo "0 results";
-        }
-        
-    }
+    
 }
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
