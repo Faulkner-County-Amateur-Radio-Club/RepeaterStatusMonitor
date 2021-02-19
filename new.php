@@ -1,31 +1,5 @@
 <?php
-/*include "./config.php";
-function GetPrevious() {
-    $query = "";
-    // Create connection
 
-    $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            $rpt = $row["id"];
-            ${'previousMailState' . $rpt} = $row["Voltage"];
-            ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-            ${'previousMailState' . ($rpt+6)} = $row["State"];
-
-        }
-
-    }
-    else {
-        echo "0 results";
-    }
-    //return $previousMailState1;
-}*/
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
@@ -44,11 +18,20 @@ class Repeater {
 	private $telemetryTempuratureChannel;
 	private $telemetryVoltageChannel;
 	private $telemetryVoltageThreshold;
-    
+    private $psendmail1;
+    private $psendmail2;
+    private $psendmail3;
+    private $psendmail4;
+    private $psendmail5;
+    private $psendmail6;
+    private $psendmail7;
+    private $psendmail8;
+    private $psendmail9;
+
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 		
 		include "./config.php";
-            $this->recipient = $recipient;
+        	$this->recipient = $recipient;
             $this->sendFrom = $sendFrom;
             $this->host_name = $host_name;
             $this->user_name = $user_name;
@@ -66,7 +49,7 @@ class Repeater {
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
-        $this->GetPrevious();
+        $this->RetrevePrevious();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -150,19 +133,44 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-         /*   for ($i = 1; $i<=9; $i++) {
+            for ($i = 1; $i<=9; $i++) {
                 echo $this->{'psendmail'.$i};
             }
 			echo $sendAlertTo;
 			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
-            */
+            
 		}
-        //else{echo $previousMailState1;}
+        else{echo $this->previousMailState1;}
         
 	}
-    
+    function RetrevePrevious() {
+        $query = "";
+        // Create connection
+        
+        $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $rpt = $row["id"];
+                $this->{'previousMailState' . $rpt} = $row["Voltage"];
+                $this->{'previousMailState' . ($rpt+3)} = $row["LastHeard"];
+                $this->{'previousMailState' . ($rpt+6)} = $row["State"];
+                
+            }
+            
+        }
+        else {
+            echo "0 results";
+        }
+        return 
+    }
 }
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
