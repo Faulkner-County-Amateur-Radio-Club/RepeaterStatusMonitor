@@ -130,10 +130,11 @@ class Repeater {
 			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
-            for ($i = 1; $i<=9; $i++) {
+            
+		}
+        for ($i = 1; $i<=9; $i++) {
                 echo $this->{'psendmail'.$i};
             }
-		}
 	}
     function RetrevePrevious() {
         $query = "";
