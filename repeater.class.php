@@ -147,7 +147,7 @@ class Repeater {
 			// All is well.  Let's see if there were problems before..
 			if ($this->previousStatePower == 0) {
 				$this->poorHealthMessage .= "Power is back on. ";
-				$sendAlertTo = $recipients[$this->name . "Power"] + ",";
+				$sendAlertTo = $recipients[$this->name . "Power"] . ",";
 			}
 			if ($this->previousStateBattery == 0) {
 				$this->poorHealthMessage .= "Battery voltage is good. ";
