@@ -109,7 +109,7 @@ class Repeater {
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
         
-		echo $this->psendmail1 ;
+		
 		if (!$this->powerIsOn) {
 			$this->poorHealthMessage .= "Power is out. ";
 			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
@@ -163,7 +163,7 @@ class Repeater {
                 $this->{'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
-            
+            echo $this->psendmail1 ;
         }
         else {
             echo "0 results";
