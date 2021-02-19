@@ -85,7 +85,7 @@ class Repeater {
 		$result -> free_result();
 		$connecton -> close();
 		
-		if ($_GET['test'] != "") {
+		if ((isset($_GET['test'])) && ($_GET['test'] != "")) {
 			$this->voltage = 0;
 			$this->lastReportedMinutesAgo = 999;
 		}
@@ -111,6 +111,7 @@ class Repeater {
 		$currentStatePower = 1;
 		$currentStateBattery = 1;
 		$currentStateTime = 1;
+		$sendAlertTo = "";
 		
 		if ((!$this->powerIsOn) && ($this->previousStatePower == 1)) {
 			$this->poorHealthMessage .= "Power is out. ";
