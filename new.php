@@ -1,6 +1,5 @@
 <?php
 
-require "config.php";
 require "repeater.class.php";
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);

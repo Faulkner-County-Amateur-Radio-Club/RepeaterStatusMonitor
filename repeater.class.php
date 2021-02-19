@@ -1,5 +1,7 @@
 <?php
 
+require "config.php";
+
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
