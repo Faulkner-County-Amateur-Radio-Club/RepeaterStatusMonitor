@@ -169,7 +169,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        //else{echo $this->psendmail1 ;}
+        else{echo $array[] ;}
         
 	}
     
