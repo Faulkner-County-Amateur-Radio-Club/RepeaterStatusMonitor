@@ -141,9 +141,9 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        echo $rpt . $this->{'psendmail' . $rpt} . $this->{'psendmail' . ($rpt+3)} . $this->{'psendmail' . ($rpt+6)};
+        //echo $rpt . $this->{'psendmail' . $rpt} . $this->{'psendmail' . ($rpt+3)} . $this->{'psendmail' . ($rpt+6)};
 	}
-    public function RetrevePrevious() {
+    function RetrevePrevious() {
         $query = "";
         // Create connection
         
