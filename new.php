@@ -153,7 +153,7 @@ class Repeater {
                 ${'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
-            echo $rpt . $psendmail1 . $psendmail4 . $psendmail7;
+            echo $rpt . ${'psendmail' . $rpt} . ${'psendmail' . ($rpt+3)} . ${'psendmail' . ($rpt+6)};
         }
         else {
             echo "0 results";
