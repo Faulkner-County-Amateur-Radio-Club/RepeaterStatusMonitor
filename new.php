@@ -142,6 +142,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
+        else{echo $this->psendmail1 ;}
         
 	}
     function RetrevePrevious() {
@@ -168,7 +169,7 @@ class Repeater {
         else {
             echo "0 results";
         }
-        echo $this->psendmail1 ;
+        
     }
 }
 
