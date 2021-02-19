@@ -12,6 +12,9 @@ class Repeater {
 	public $voltage;
 	private $poorHealthMessage;
 	private $powerValue;
+	private $previousStatePower;
+	private $previousStateBattery;
+	private $previousStateTime;
 	private $telemetryData;
 	private $telemetryGridPowerStatusChannel;
 	private $telemetryGridPowerThreshold;
@@ -65,6 +68,21 @@ class Repeater {
 		preg_match("/Channel\s" . $this->telemetryTempuratureChannel . "\:\s[0-9]+/", $this->page, $match);
 		$this->tempurature = number_format(substr($match[0],11));
 		
+		// Let's go get the previously reported states
+		$connecton = new mysqli(database::$address, database::$username, database::$password, database::$schema);
+		if ($connecton->connect_error) {
+			die("Database connection failed: " . $connecton->connect_error);
+		}
+		$sql = "Select powerOn, batteryGood, reportingOnTime from repeaterState where repeater='$repeaterName'";
+		$result = $connecton->query($sql);
+		while($row = $result->fetch_assoc()) {
+			$this->previousStatePower = $row["powerOn"];
+			$this->previousStateBattery = $row["batteryGood"];
+			$this->previousStateTime = $row["reportingOnTime"];
+		}
+		$result -> free_result();
+		$connecton -> close();
+		
 		if ($_GET['test'] != "") {
 			$this->voltage = 0;
 			$this->lastReportedMinutesAgo = 999;
@@ -88,17 +106,17 @@ class Repeater {
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
-		
-		if (!$this->powerIsOn) {
+		if ((!$this->powerIsOn) && ($this->previousStatePower == true)) {
+			
 			$this->poorHealthMessage .= "Power is out. ";
 			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
 		}
 		
-		if ($this->voltage < $this->telemetryVoltageThreshold) {
+		if (($this->voltage < $this->telemetryVoltageThreshold) && ($previousStateBattery == true)) {
 			$this->poorHealthMessage .= "Battery voltage is low. ";
 		}
 		
-		if ($this->lastReportedMinutesAgo > 360) {
+		if (($this->lastReportedMinutesAgo > 360) && ($previousStateTime == true)) {
 			$this->poorHealthMessage .= "Hasn't reported in over 6 hours. ";
 		}
 		
@@ -113,15 +131,12 @@ class Repeater {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
 			
-            for ($i = 1; $i<=9; $i++) {
-                echo $this->{'psendmail'.$i};
-            }
-			
 			if (!mail($sendAlertTo, "", $this->poorHealthMessage, "from: w5auu@ddse.net")) {
 				echo "Error sending email.";
 			} 
 		}   
 	}
+	
 }
 
 ?>
