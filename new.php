@@ -140,10 +140,11 @@ class Repeater {
                 ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
                 ${'psendmail' . ($rpt+6)} = $row["State"];
             }
+        }
         else {
             echo "0 results";
         }
-
+        
     }
 }
 
