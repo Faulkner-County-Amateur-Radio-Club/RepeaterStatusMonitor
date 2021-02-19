@@ -1,4 +1,5 @@
 <?php
+include "./config.php";
 function RetrevePrevious() {
         $query = "";
         // Create connection
