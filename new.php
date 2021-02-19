@@ -1,7 +1,5 @@
 <?php
 
-include 'config.php';
-
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
@@ -22,6 +20,11 @@ class Repeater {
 	private $telemetryVoltageThreshold;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
+		
+		include "./config.php";
+        	$this->recipient = $recipient;
+		$this=>sendFrom =$sendFrom;
+		
 		$this->name = $name;
 		$this->description = $description;
 		$this->frequency = $frequency;
@@ -113,8 +116,8 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-			echo "sending text";
-			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: ". $sendFrom)){
+			
+			if (mail($this->recipient, "Warning", $this->poorHealthMessage, "from: ". $this->sendFrom)){
 				echo "message accepted";
 			}else{echo "ERROR";};
 		}
