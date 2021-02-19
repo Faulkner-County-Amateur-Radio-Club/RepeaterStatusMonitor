@@ -73,7 +73,7 @@ class Repeater {
 		if ($connecton->connect_error) {
 			die("Database connection failed: " . $connecton->connect_error);
 		}
-		$sql = "Select powerOn, batteryGood, reportingOnTime from repeaterState where repeater='$repeaterName'";
+		$sql = "Select powerOn, batteryGood, reportingOnTime from repeaterState where repeater='$this->name'";
 		$result = $connecton->query($sql);
 		while($row = $result->fetch_assoc()) {
 			$this->previousStatePower = $row["powerOn"];
