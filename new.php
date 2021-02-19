@@ -3,7 +3,7 @@ function RetrevePrevious() {
         $query = "";
         // Create connection
         
-        $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
+        $conn = NEW mysqli($host_name, $user_name, $password, $database);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
@@ -13,9 +13,9 @@ function RetrevePrevious() {
             // output data of each row
             while($row = $result->fetch_assoc()) {
                 $rpt = $row["id"];
-                $this->{'previousMailState' . $rpt} = $row["Voltage"];
-                $this->{'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-                $this->{'psendmail' . ($rpt+6)} = $row["State"];
+                ${'previousMailState' . $rpt} = $row["Voltage"];
+                ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
+                ${'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
             
