@@ -1,5 +1,5 @@
 <?php
-function RetrevePrevious() {
+public function RetrevePrevious() {
         $query = "";
         // Create connection
         
