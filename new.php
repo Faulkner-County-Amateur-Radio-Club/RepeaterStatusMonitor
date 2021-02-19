@@ -132,7 +132,7 @@ class Repeater {
     function RetrevePrevious() {
         $query = "";
         // Create connection
-        echo host_name, $this->user_name, $this->password, $this->database);
+        
         $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
