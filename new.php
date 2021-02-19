@@ -142,7 +142,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        else{echo $this->previousMailState1;}
+        else{echo $this->psendmail1 ;}
         
 	}
     function RetrevePrevious() {
@@ -161,7 +161,7 @@ class Repeater {
                 $rpt = $row["id"];
                 $this->{'previousMailState' . $rpt} = $row["Voltage"];
                 $this->{'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-                $this->{'previousMailState' . ($rpt+6)} = $row["State"];
+                $this->{'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
             
@@ -169,7 +169,7 @@ class Repeater {
         else {
             echo "0 results";
         }
-        return 
+        
     }
 }
 
