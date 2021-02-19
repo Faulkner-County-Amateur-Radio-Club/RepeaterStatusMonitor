@@ -74,7 +74,7 @@ class Repeater {
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
-        $RetrevePrevious();
+        //$RetrevePrevious();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
