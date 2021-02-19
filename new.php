@@ -162,7 +162,7 @@ class Repeater {
                 $this->{'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
-            echo $rpt . ${'this->psendmail' . $rpt} . ${'this->psendmail' . ($rpt+3)} . ${'this->psendmail' . ($rpt+6)};
+            echo $rpt . $this->{'psendmail' . $rpt} . $this->{'psendmail' . ($rpt+3)} . $this->{'psendmail' . ($rpt+6)};
         }
         else {
             echo "0 results";
