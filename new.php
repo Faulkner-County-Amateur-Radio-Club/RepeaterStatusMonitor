@@ -93,7 +93,7 @@ class Repeater {
 			$this->poorHealthMessage += "Battery voltage is low. ";
 		}
 		
-		if ($this->$lastReportedMinutesAgo > 360) {
+		if ($this->lastReportedMinutesAgo > 360) {
 			$this->poorHealthMessage += "Hasn't reported in over 6 hours. ";
 		}
 		
