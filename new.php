@@ -123,6 +123,9 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
+            for ($i = 1; $i<=9; $i++) {
+                echo $this->{'psendmail'.$i};
+            }
 			echo $sendAlertTo;
 			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
