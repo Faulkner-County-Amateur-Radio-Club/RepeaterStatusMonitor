@@ -108,6 +108,7 @@ class Repeater {
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
+        $rpt = 1;
 		echo $this->{'psendmail' . $rpt} . $this->{'psendmail' . ($rpt+3)} . $this->{'psendmail' . ($rpt+6)};
 		if (!$this->powerIsOn) {
 			$this->poorHealthMessage .= "Power is out. ";
