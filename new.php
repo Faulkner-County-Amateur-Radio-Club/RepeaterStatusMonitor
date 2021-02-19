@@ -142,7 +142,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        else{echo $this->previousMailState1 . " test";}
+        else{echo $this->previousMailState1;}
         
 	}
     function RetrevePrevious() {
