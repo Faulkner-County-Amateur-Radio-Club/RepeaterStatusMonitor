@@ -139,9 +139,9 @@ class Repeater {
 			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
-            echo $rpt . $this->{'psendmail' . $rpt} . $this->{'psendmail' . ($rpt+3)} . $this->{'psendmail' . ($rpt+6)};
+            
 		}
-        
+        echo $rpt . $this->{'psendmail' . $rpt} . $this->{'psendmail' . ($rpt+3)} . $this->{'psendmail' . ($rpt+6)};
 	}
     function RetrevePrevious() {
         $query = "";
