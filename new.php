@@ -70,7 +70,6 @@ class Repeater {
 		if ($_GET['test'] != "") {
 			$this->voltage = 0;
 			$this->lastReportedMinutesAgo = 999;
-			$this->poorHealthMessage = "*TESTING* ";
 		}
 		
 		$this->doHealthCheck();
@@ -106,6 +105,9 @@ class Repeater {
 		
 		if ($this->poorHealthMessage != "") {
 			$this->poorHealthMessage = "Problems at the $this->description: " . $this->poorHealthMessage;
+			if (&_GET['test'] != "") { 
+				$this->poorHealthMessage = "*TESTING* " . $this->poorHealthMessage; 
+			}
 			$sendAlertTo .= $recipients["typicalSuspects"];
 			mail($sendAlertTo, "", $this->poorHealthMessage, 'from: '. $sendFrom);
 		}
