@@ -114,7 +114,7 @@ class Repeater {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
 			
-			mail($sendAlertTo, "", $this->poorHealthMessage, 'from: '. $sendFrom);
+			mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: ". $sendFrom);
 		}
 	}
 }
