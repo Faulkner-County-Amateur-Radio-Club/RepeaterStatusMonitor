@@ -133,7 +133,7 @@ class Repeater {
             
 		}
         for ($i = 1; $i<=9; $i++) {
-                echo $this->{'psendmail'.$i};
+                echo $this->{'psendmail'.$i}.' test ';
             }
 	}
     function RetrevePrevious() {
