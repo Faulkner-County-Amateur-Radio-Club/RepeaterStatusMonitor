@@ -130,6 +130,12 @@ class Repeater {
 		}
 	}
     function RetrevePrevious() {
+        $query = "";
+        // Create connection
+        $conn = NEW mysqli($host_name, $user_name, $password, $database);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
        /* $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
