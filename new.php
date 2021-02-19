@@ -1,31 +1,32 @@
 <?php
-include "./config.php";
+
 function RetrevePrevious() {
-        $query = "";
-        // Create connection
-        
-        $conn = NEW mysqli($host_name, $user_name, $password, $database);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                $rpt = $row["id"];
-                ${'previousMailState' . $rpt} = $row["Voltage"];
-                ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-                ${'psendmail' . ($rpt+6)} = $row["State"];
-                
-            }
-            
-        }
-        else {
-            echo "0 results";
-        }
-        
+    include "./config.php";
+    $query = "";
+    // Create connection
+
+    $conn = NEW mysqli($host_name, $user_name, $password, $database);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+    $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            $rpt = $row["id"];
+            ${'previousMailState' . $rpt} = $row["Voltage"];
+            ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
+            ${'psendmail' . ($rpt+6)} = $row["State"];
+
+        }
+
+    }
+    else {
+        echo "0 results";
+    }
+        
+}
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
