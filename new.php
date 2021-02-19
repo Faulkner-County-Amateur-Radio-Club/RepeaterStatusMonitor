@@ -148,9 +148,9 @@ class Repeater {
             // output data of each row
             while($row = $result->fetch_assoc()) {
                 $rpt = $row["id"];
-                ${'psendmail' . $rpt} = $row["Voltage"];
-                ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
-                ${'psendmail' . ($rpt+6)} = $row["State"];
+                public ${'psendmail' . $rpt} = $row["Voltage"];
+                public ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
+                public ${'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
             
