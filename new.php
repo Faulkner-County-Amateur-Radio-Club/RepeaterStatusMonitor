@@ -97,7 +97,7 @@ class Repeater {
 			echo "<br><span>" . $this->poorHealthMessage . "</span>";
 		}
 	}
-	function doHealthCheck() {
+	public function doHealthCheck() {
 		// Recipients are defined in the config.php
 		
 		if (!$this->powerIsOn) {
