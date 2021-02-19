@@ -1,5 +1,30 @@
 <?php
+function GetPrevious() {
+    $query = "";
+    // Create connection
 
+    $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            $rpt = $row["id"];
+            ${'previousMailState' . $rpt} = $row["Voltage"];
+            ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
+            ${'previousMailState' . ($rpt+6)} = $row["State"];
+
+        }
+
+    }
+    else {
+        echo "0 results";
+    }
+    return $previousMailState1;
+}
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
@@ -49,7 +74,7 @@ class Repeater {
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
-        $this->RetrevePrevious();
+        $this->GetPrevious();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -142,35 +167,10 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        else{echo $this->previousMailState1;}
+        else{echo $previousMailState1;}
         
 	}
-    function RetrevePrevious() {
-        $query = "";
-        // Create connection
-        
-        $conn = NEW mysqli($this->host_name, $this->user_name, $this->password, $this->database);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                $rpt = $row["id"];
-                $this->{'previousMailState' . $rpt} = $row["Voltage"];
-                $this->{'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-                $this->{'previousMailState' . ($rpt+6)} = $row["State"];
-                
-            }
-            
-        }
-        else {
-            echo "0 results";
-        }
-        
-    }
+    
 }
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
