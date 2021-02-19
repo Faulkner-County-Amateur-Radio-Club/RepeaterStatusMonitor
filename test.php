@@ -4,7 +4,7 @@ require "config.php";
 
 function GetPreviousRepeaterStatus($repeaterName) {
     // Create connection
-    $connecton = new mysqli($database::address, $database::username, $database::password, $database::schema);
+    $connecton = new mysqli(database::address, database::username, database::password, database::schema);
     if ($connecton->connect_error) {
         die("Database connection failed: " . $connecton->connect_error);
     }
