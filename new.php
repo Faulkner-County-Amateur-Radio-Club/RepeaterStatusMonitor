@@ -121,8 +121,8 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-			echo $this->recipients['testMode'];
-			if (mail($this->recipients['testMode'], "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
+			echo $sendAlertTo;
+			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
 				echo "message accepted";
 			}else{echo "ERROR";};
 		}
