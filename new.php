@@ -77,6 +77,7 @@ class Repeater {
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
         RetrevePrevious();
+        echo $array[];
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -169,7 +170,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        else{echo $array[] ;}
+        
         
 	}
     
