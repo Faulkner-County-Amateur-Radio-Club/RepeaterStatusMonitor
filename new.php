@@ -1,5 +1,5 @@
 <?php
-include "./config.php";
+/*include "./config.php";
 function GetPrevious() {
     $query = "";
     // Create connection
@@ -25,7 +25,7 @@ function GetPrevious() {
         echo "0 results";
     }
     //return $previousMailState1;
-}
+}*/
 class Repeater {
 	public $description;
 	public $lastReportedMinutesAgo;
