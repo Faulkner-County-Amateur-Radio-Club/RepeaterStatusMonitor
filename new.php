@@ -24,7 +24,7 @@ function GetPrevious() {
     else {
         echo "0 results";
     }
-    return $previousMailState1;
+    //return $previousMailState1;
 }
 class Repeater {
 	public $description;
@@ -44,16 +44,7 @@ class Repeater {
 	private $telemetryTempuratureChannel;
 	private $telemetryVoltageChannel;
 	private $telemetryVoltageThreshold;
-    private $psendmail1;
-    private $psendmail2;
-    private $psendmail3;
-    private $psendmail4;
-    private $psendmail5;
-    private $psendmail6;
-    private $psendmail7;
-    private $psendmail8;
-    private $psendmail9;
-
+    
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 		
 	//	include "./config.php";
@@ -159,7 +150,7 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
-            for ($i = 1; $i<=9; $i++) {
+         /*   for ($i = 1; $i<=9; $i++) {
                 echo $this->{'psendmail'.$i};
             }
 			echo $sendAlertTo;
@@ -169,7 +160,7 @@ class Repeater {
             
 		}
         //else{echo $previousMailState1;}
-        
+        */
 	}
     
 }
