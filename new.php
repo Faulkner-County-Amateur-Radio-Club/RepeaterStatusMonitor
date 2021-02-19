@@ -32,7 +32,6 @@ class Repeater {
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
-		$this->doHealthCheck();
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -73,6 +72,8 @@ class Repeater {
 			$this->lastReportedMinutesAgo = 999;
 			$this->poorHealthMessage = "*TESTING* ";
 		}
+		
+		$this->doHealthCheck();
 	}
 	function toString() {
 		echo "<h1>$this->name - $this->frequency</h1>";
