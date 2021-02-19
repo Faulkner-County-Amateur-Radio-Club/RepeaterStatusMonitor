@@ -1,7 +1,7 @@
 <?php
+include "./config.php";
 
 function RetrevePrevious() {
-    include "./config.php";
     $query = "";
     // Create connection
 
@@ -18,9 +18,7 @@ function RetrevePrevious() {
             ${'previousMailState' . $rpt} = $row["Voltage"];
             ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
             ${'previousMailState' . ($rpt+6)} = $row["State"];
-            
         }
-
     }
     else {
         echo "0 results";
@@ -45,27 +43,8 @@ class Repeater {
 	private $telemetryTempuratureChannel;
 	private $telemetryVoltageChannel;
 	private $telemetryVoltageThreshold;
-    private $psendmail1;
-    private $psendmail2;
-    private $psendmail3;
-    private $psendmail4;
-    private $psendmail5;
-    private $psendmail6;
-    private $psendmail7;
-    private $psendmail8;
-    private $psendmail9;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
-		
-		include "./config.php";
-        	$this->recipient = $recipient;
-            $this->sendFrom = $sendFrom;
-            $this->host_name = $host_name;
-            $this->user_name = $user_name;
-            $this->password = $password;
-            $this->database = $database;
-            $this->recipients = $recipients;
-		
 		$this->name = $name;
 		$this->description = $description;
 		$this->frequency = $frequency;
@@ -76,8 +55,6 @@ class Repeater {
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
-        RetrevePrevious($array[]);
-        echo $array[1];
 	}
 	function loadData() {
 		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
@@ -136,7 +113,6 @@ class Repeater {
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
-        
 		
 		if (!$this->powerIsOn) {
 			$this->poorHealthMessage .= "Power is out. ";
@@ -161,19 +137,16 @@ class Repeater {
 			else {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
+			
             for ($i = 1; $i<=9; $i++) {
                 echo $this->{'psendmail'.$i};
             }
-			echo $sendAlertTo;
-			if (mail($sendAlertTo, "Warning", $this->poorHealthMessage, "from: w5auu@ddse.net")){
-				echo "message accepted";
-			}else{echo "ERROR";};
-            
-		}
-        
-        
+			
+			if (!mail($sendAlertTo, "", $this->poorHealthMessage, "from: w5auu@ddse.net")) {
+				echo "Error sending email.";
+			} 
+		}   
 	}
-    
 }
 
 $w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
