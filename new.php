@@ -17,7 +17,7 @@ function RetrevePrevious() {
             $rpt = $row["id"];
             ${'previousMailState' . $rpt} = $row["Voltage"];
             ${'previousMailState' . ($rpt+3)} = $row["LastHeard"];
-            ${'psendmail' . ($rpt+6)} = $row["State"];
+            ${'previousMailState' . ($rpt+6)} = $row["State"];
 
         }
 
