@@ -141,7 +141,7 @@ class Repeater {
 			}else{echo "ERROR";};
             
 		}
-        echo $rpt . ${'psendmail' . $rpt} . ${'psendmail' . ($rpt+3)} . ${'psendmail' . ($rpt+6)};
+        echo $rpt . ${'this->psendmail' . $rpt} . ${'this->psendmail' . ($rpt+3)} . ${'this->psendmail' . ($rpt+6)};
 	}
     function RetrevePrevious() {
         $query = "";
@@ -157,9 +157,9 @@ class Repeater {
             // output data of each row
             while($row = $result->fetch_assoc()) {
                 $rpt = $row["id"];
-                ${'psendmail' . $rpt} = $row["Voltage"];
-                ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
-                ${'psendmail' . ($rpt+6)} = $row["State"];
+                $this->{'psendmail' . $rpt} = $row["Voltage"];
+                $this->{'psendmail' . ($rpt+3)} = $row["LastHeard"];
+                $this->{'psendmail' . ($rpt+6)} = $row["State"];
                 
             }
             
