@@ -106,18 +106,24 @@ class Repeater {
 	}
 	function doHealthCheck() {
 		// Recipients are defined in the config.php
-		if ((!$this->powerIsOn) && ($this->previousStatePower == true)) {
-			
+		$currentStatePower = 1;
+		$currentStateBattery = 1;
+		$currentStateTime = 1;
+		
+		if ((!$this->powerIsOn) && ($this->previousStatePower == 1)) {
 			$this->poorHealthMessage .= "Power is out. ";
 			$sendAlertTo = $recipients[$this->name . "Power"] + ",";
+			$currentStatePower = 0;
 		}
 		
-		if (($this->voltage < $this->telemetryVoltageThreshold) && ($previousStateBattery == true)) {
+		if (($this->voltage < $this->telemetryVoltageThreshold) && ($this->previousStateBattery == true)) {
 			$this->poorHealthMessage .= "Battery voltage is low. ";
+			$currentStateBattery = 0;
 		}
 		
-		if (($this->lastReportedMinutesAgo > 360) && ($previousStateTime == true)) {
+		if (($this->lastReportedMinutesAgo > 360) && ($this->previousStateTime == true)) {
 			$this->poorHealthMessage .= "Hasn't reported in over 6 hours. ";
+			$currentStateTime = 0;
 		}
 		
 		if ($this->poorHealthMessage != "") {
@@ -134,9 +140,37 @@ class Repeater {
 			if (!mail($sendAlertTo, "", $this->poorHealthMessage, "from: w5auu@ddse.net")) {
 				echo "Error sending email.";
 			} 
-		}   
+		}
+		else {
+			// All is well.  Let's see if there were problems before..
+			if ($this->previousStatePower == 0) {
+				$this->poorHealthMessage .= "Power is back on. ";
+				$sendAlertTo = $recipients[$this->name . "Power"] + ",";
+			}
+			if ($this->previousStateBattery == 0) {
+				$this->poorHealthMessage .= "Battery voltage is good. ";
+			}
+			if ($this->previousStateTime == 0) {
+				$this->poorHealthMessage .= "Repeater is reporting again. ";
+			}
+			
+			$sendAlertTo .= $recipients["typicalSuspects"];
+			if (!mail($sendAlertTo, "", "Good news! " . $this->poorHealthMessage, "from: w5auu@ddse.net")) {
+				echo "Error sending email.";
+			}
+			$this->poorHealthMessage = "";
+		}
+		
+		// Save current state
+		$connecton = new mysqli(database::$address, database::$username, database::$password, database::$schema);
+		if ($connecton->connect_error) {
+			die("Database connection failed: " . $connecton->connect_error);
+		}
+		$sql = "Update repeaterState set powerOn=$currentStatePower,batteryGood=$currentStateBattery,reportingOnTime=$currentStateTime where repeater='$this->name';";
+		$result = $connecton->query($sql);
+		$result -> free_result();
+		$connecton -> close();
 	}
-	
 }
 
 ?>
