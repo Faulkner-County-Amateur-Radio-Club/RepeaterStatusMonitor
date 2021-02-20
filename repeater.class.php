@@ -89,8 +89,6 @@ class Repeater {
 			$this->voltage = 0;
 			$this->lastReportedMinutesAgo = 999;
 		}
-		
-		$this->doHealthCheck();
 	}
 	function toString() {
 		echo "<h1>$this->name - $this->frequency</h1>";
