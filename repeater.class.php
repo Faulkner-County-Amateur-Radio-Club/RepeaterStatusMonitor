@@ -3,26 +3,28 @@
 require "config.php";
 
 class Repeater {
+	// Note that these are in alphabetical order
 	public $description;
+	public $frequency;
 	public $lastReportedMinutesAgo;
 	public $lastReportedTime;
-	public $frequency;
 	public $name;
-	public $powerIsOn;
-	public $status;
-	public $tempurature;
-	public $voltage;
 	private $poorHealthMessage;
-	private $powerValue;
+	public $powerIsOn;
+	public $powerValue;
 	private $previousStatePower;
 	private $previousStateBattery;
 	private $previousStateTime;
-	private $telemetryData;
+	public $status;
 	private $telemetryGridPowerStatusChannel;
 	private $telemetryGridPowerThreshold;
+	private $telemetryPage;
 	private $telemetryTempuratureChannel;
+	public $telemetryURL;
 	private $telemetryVoltageChannel;
 	private $telemetryVoltageThreshold;
+	public $tempurature;
+	public $voltage;
 
 	function __construct($name, $description, $frequency, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryGridPowerThreshold, $telemetryTempuratureChannel) {
 		$this->name = $name;
@@ -44,15 +46,15 @@ class Repeater {
 		$this->lastReportedMinutesAgo = (time() - $this->timeLastReported)/60; 
 		$this->status = $jsonObject["entries"][0]["status"];
 
-		$this->pageURL = "https://aprs.fi/telemetry/" . $this->name . "&key=100665.Mj8HjUvXqEHYjrV6";
-		$this->page = file_get_contents($this->pageURL,true);
+		$this->telemetryURL = "https://aprs.fi/telemetry/" . $this->name . "&key=100665.Mj8HjUvXqEHYjrV6";
+		$this->telemetryPage = file_get_contents($this->telemetryURL,true);
 
 		// voltage
-		preg_match("/Channel\s" . $this->telemetryVoltageChannel . "\:\s[0-9]+/", $this->page, $match);
+		preg_match("/Channel\s" . $this->telemetryVoltageChannel . "\:\s[0-9]+/", $this->telemetryPage, $match);
 		$this->voltage = number_format(substr($match[0],11)) / 10;
 
 		// grid power status
-		preg_match("/Channel\s" . $this->telemetryGridPowerStatusChannel . "\:\s[0-9]+/", $this->page, $match);
+		preg_match("/Channel\s" . $this->telemetryGridPowerStatusChannel . "\:\s[0-9]+/", $this->telemetryPage, $match);
 		$this->powerValue = number_format(substr($match[0],11));
 
 		if ($this->telemetryGridPowerThreshold == 100) {
@@ -67,7 +69,7 @@ class Repeater {
 		}
 
 		// tempurature
-		preg_match("/Channel\s" . $this->telemetryTempuratureChannel . "\:\s[0-9]+/", $this->page, $match);
+		preg_match("/Channel\s" . $this->telemetryTempuratureChannel . "\:\s[0-9]+/", $this->telemetryPage, $match);
 		$this->tempurature = number_format(substr($match[0],11));
 		
 		// Let's go get the previously reported states
