@@ -43,7 +43,7 @@ class Repeater {
 		$jsonData = file_get_contents($jsonUrl); 
 		$jsonObject = json_decode($jsonData, true);
 		$this->timeLastReported = $jsonObject["entries"][0]["lasttime"];
-		$this->lastReportedMinutesAgo = (time() - $this->timeLastReported)/60; 
+		$this->lastReportedMinutesAgo = round((time() - $this->timeLastReported)/60); 
 		$this->status = $jsonObject["entries"][0]["status"];
 
 		$this->telemetryURL = "https://aprs.fi/telemetry/" . $this->name . "&key=100665.Mj8HjUvXqEHYjrV6";
