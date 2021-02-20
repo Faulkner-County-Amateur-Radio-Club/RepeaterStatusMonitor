@@ -91,7 +91,6 @@ class Repeater {
 		}
 		
 		$this->doHealthCheck();
-        
 	}
 	function toString() {
 		echo "<h1>$this->name - $this->frequency</h1>";
@@ -105,6 +104,9 @@ class Repeater {
 		if ($this->poorHealthMessage != "") {
 			echo "<br><span>" . $this->poorHealthMessage . "</span>";
 		}
+	}
+	function toJson() {
+		$json = json_encode($this);
 	}
 	function doHealthCheck() {
 		global $recipients;
