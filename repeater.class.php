@@ -12,6 +12,7 @@ class Repeater {
 	private $poorHealthMessage;
 	public $powerIsOn;
 	public $powerValue;
+	public $powerValueForCharts;
 	private $previousStatePower;
 	private $previousStateBattery;
 	private $previousStateTime;
@@ -34,6 +35,7 @@ class Repeater {
 		$this->telemetryGridPowerStatusChannel = $telemetryGridPowerStatusChannel;
 		$this->telemetryGridPowerThreshold = $telemetryGridPowerThreshold;
 		$this->powerIsOn = true; // Assume it's on
+		$this->powerValueForCharts = 3; // ^^
 		$this->telemetryVoltageThreshold = 11.0;
 		$this->telemetryTempuratureChannel = $telemetryTempuratureChannel;
 		$this->loadData();
@@ -60,11 +62,13 @@ class Repeater {
 		if ($this->telemetryGridPowerThreshold == 100) {
 			if ($this->powerValue > 100) {
 				$this->powerIsOn = false;
+				$this->powerValueForCharts = 1;
 			}
 		}
 		else {
 			if ($this->powerValue < 50) {
 				$this->powerIsOn = false;
+				$this->powerValueForCharts = 1;
 			}
 		}
 
