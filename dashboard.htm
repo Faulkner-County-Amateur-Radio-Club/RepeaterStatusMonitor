@@ -5,7 +5,6 @@
 	<body>
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<div>W5AUU-1</div>
 		<style>
 			.chart {
 				width: 300; 
@@ -13,6 +12,7 @@
 				float: left;
 			}
 		</style>
+		<div>W5AUU-1</div>
 		<div id="chart1" class="chart"></div>
 		<div id="chart2" class="chart"></div>
 		<div id="chart3" class="chart"></div>
@@ -63,6 +63,12 @@
 					redFrom: 360, redTo: 420,
 					yellowFrom:120, yellowTo: 360,
 					min: 0, max: 420
+				},
+				power : {
+					width: 300, height: 300, minorTicks: 1,
+					redFrom: 0, redTo: 50,
+					greenFrom: 50, greenTo: 100,
+					min: 0, max: 100
 				}
 			};
 
@@ -70,6 +76,7 @@
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
 					drawChart("Battery (v)", "chart1", options.battery, jsonData.repeaters.w5auu1.voltage, 0.2);
 					drawChart("Time (min)", "chart2", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", "chart3", options.power, jsonData.repeaters.w5auu1.powerValue, 2);
 				}
 				else {
 					setTimeout(function() { drawCharts(); }, 1000); // Try again in a second
