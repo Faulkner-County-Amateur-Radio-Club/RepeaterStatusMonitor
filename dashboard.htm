@@ -45,9 +45,10 @@
 				]);
 
 				var batteryOptions = {
-				  width: 400, height: 120, minorTicks: 1,
-				  redFrom: 0, redTo: 11,
-				  yellowFrom:11, yellowTo: 11.5
+					width: 400, height: 120, minorTicks: 1,
+					redFrom: 0, redTo: 11,
+					yellowFrom:11, yellowTo: 11.5,
+					max: 14.0
 				};
 
 				var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
@@ -55,7 +56,7 @@
 				chart.draw(data, batteryOptions);
 
 				setInterval(function() {
-					var val = fluctuate(jsonData.repeaters.w5auu1.voltage, 0.1);
+					var val = fluctuate(jsonData.repeaters.w5auu1.voltage, 0.2);
 					data.setValue(0, 1, val);
 					chart.draw(data, batteryOptions);
 				}, 1000);
