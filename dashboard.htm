@@ -6,25 +6,28 @@
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<style>
+			.repeater {
+				clear: both;
+			}
 			.chart {
 				width: 300; 
 				height: 300;
 				float: left;
 			}
 		</style>
-		<div>
+		<div class="repeater">
 			<div class="title">W5AUU-1</div>
 			<div id="chart1a" class="chart"></div>
 			<div id="chart1b" class="chart"></div>
 			<div id="chart1c" class="chart"></div>
 		</div>
-		<div>
+		<div class="repeater">
 			<div class="title">W5AUU-2</div>
 			<div id="chart2a" class="chart"></div>
 			<div id="chart2b" class="chart"></div>
 			<div id="chart2c" class="chart"></div>
 		</div>
-		<div>
+		<div class="repeater">
 			<div class="title">W5AUU-3</div>
 			<div id="chart3a" class="chart"></div>
 			<div id="chart3b" class="chart"></div>
@@ -80,9 +83,9 @@
 				},
 				power : {
 					width: 300, height: 300, majorTicks: 1,
-					redFrom: 0, redTo: 2,
-					greenFrom: 2, greenTo: 4,
-					min: 0, max: 12
+					redFrom: 0, redTo: 20,
+					greenFrom: 20, greenTo: 40,
+					min: 0, max: 40
 				}
 			};
 
