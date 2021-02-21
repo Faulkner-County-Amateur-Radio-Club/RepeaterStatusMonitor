@@ -12,10 +12,24 @@
 				float: left;
 			}
 		</style>
-		<div>W5AUU-1</div>
-		<div id="chart1" class="chart"></div>
-		<div id="chart2" class="chart"></div>
-		<div id="chart3" class="chart"></div>
+		<div>
+			<div class="title">W5AUU-1</div>
+			<div id="chart1a" class="chart"></div>
+			<div id="chart1b" class="chart"></div>
+			<div id="chart1c" class="chart"></div>
+		</div>
+		<div>
+			<div class="title">W5AUU-2</div>
+			<div id="chart2a" class="chart"></div>
+			<div id="chart2b" class="chart"></div>
+			<div id="chart2c" class="chart"></div>
+		</div>
+		<div>
+			<div class="title">W5AUU-3</div>
+			<div id="chart3a" class="chart"></div>
+			<div id="chart3b" class="chart"></div>
+			<div id="chart3c" class="chart"></div>
+		</div>
 		<script type="text/javascript">
 			function fluctuate(val, maxFluctuation){
 				if (maxFluctuation == 0) {
@@ -59,7 +73,7 @@
 					min: 10.0, max: 14.0
 				},
 				time : {
-					width: 300, height: 300, minorTicks: 1,
+					width: 300, height: 300, minorTicks: 1, majorTicks: 60,
 					redFrom: 360, redTo: 420,
 					yellowFrom:120, yellowTo: 360,
 					min: 0, max: 420
@@ -68,15 +82,23 @@
 					width: 300, height: 300, majorTicks: 1,
 					redFrom: 0, redTo: 2,
 					greenFrom: 2, greenTo: 4,
-					min: 0, max: 10
+					min: 0, max: 12
 				}
 			};
 
 			function drawCharts() {
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
-					drawChart("Battery (v)", "chart1", options.battery, jsonData.repeaters.w5auu1.voltage, 0.2);
-					drawChart("Time (min)", "chart2", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
-					drawChart("Grid power", "chart3", options.power, jsonData.repeaters.w5auu1.powerValueForCharts, 2);
+					drawChart("Battery (v)", "chart1a", options.battery, jsonData.repeaters.w5auu1.voltage, 0.2);
+					drawChart("Time (min)", "chart1b", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", "chart1c", options.power, jsonData.repeaters.w5auu1.powerValueForCharts, 2);
+
+					drawChart("Battery (v)", "chart2a", options.battery, jsonData.repeaters.w5auu2.voltage, 0.2);
+					drawChart("Time (min)", "chart2b", options.time, jsonData.repeaters.w5auu2.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", "chart2c", options.power, jsonData.repeaters.w5auu2.powerValueForCharts, 2);
+					
+					drawChart("Battery (v)", "chart3a", options.battery, jsonData.repeaters.w5auu3.voltage, 0.2);
+					drawChart("Time (min)", "chart3b", options.time, jsonData.repeaters.w5auu3.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", "chart3c", options.power, jsonData.repeaters.w5auu3.powerValueForCharts, 2);
 				}
 				else {
 					setTimeout(function() { drawCharts(); }, 1000); // Try again in a second
