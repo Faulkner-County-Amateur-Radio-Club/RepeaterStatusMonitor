@@ -17,12 +17,12 @@ class Repeater {
 	private $previousStateTime;
 	public $status;
 	private $telemetryGridPowerStatusChannel;
-	private $telemetryGridPowerThreshold;
+	public $telemetryGridPowerThreshold;
 	private $telemetryPage;
 	private $telemetryTempuratureChannel;
 	public $telemetryURL;
 	private $telemetryVoltageChannel;
-	private $telemetryVoltageThreshold;
+	public $telemetryVoltageThreshold;
 	public $tempurature;
 	public $voltage;
 
