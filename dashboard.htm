@@ -22,6 +22,7 @@
 				font-family: 'Black Ops One';
 				float: left;
 				width: 200px;
+				height: 200px;
 			}
 			.repeater {
 				clear: both;
@@ -132,7 +133,7 @@
 					var val = fluctuate(intValue, intFluctuate);
 					data.setValue(0, 1, val);
 					chart.draw(data, objOptions);
-				}, Math.round(Math.random()*1000));
+				}, Math.round(Math.random()*10000));
 			}
 		</script>
 	</body>
