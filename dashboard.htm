@@ -6,28 +6,40 @@
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<div>W5AUU-1</div>
-		<div id="chart1" style="width: 800px; height: 240px;">words inside</div>
-		<div id="chart2" style="width: 800px; height: 240px;"></div>
-		<div id="chart3" style="width: 800px; height: 240px;"></div>
+		<style>
+			.chart {
+				width: 800px; 
+				height: 240px;
+				float: left;
+			}
+		</style>
+		<div id="chart1" class="chart"></div>
+		<div id="chart2" class="chart"></div>
+		<div id="chart3" class="chart"></div>
 		<script type="text/javascript">
 			function fluctuate(val, maxFluctuation){
-				var r = Math.random();
-				var flux;
-				
-				if (maxFluctuation < 1) {
-					flux = maxFluctuation;
+				if (maxFluctuation == 0) {
+					return val;
 				}
 				else {
-					flux = Math.floor(r * (maxFluctuation+1));
+					var r = Math.random();
+					var flux;
+
+					if (maxFluctuation < 1) {
+						flux = maxFluctuation;
+					}
+					else {
+						flux = Math.floor(r * (maxFluctuation+1));
+					}
+
+					if ((r*100) % 2 == 0) {
+						rtnValue = val - flux;
+					}
+					else {
+						rtnValue = val + flux;
+					}
+					return rtnValue;
 				}
-				
-				if ((r*100) % 2 == 0) {
-					rtnValue = val - flux;
-				}
-				else {
-					rtnValue = val + flux;
-				}
-				return rtnValue;
 			}
 			
 			var jsonData; // Declared here to it is accessible globally
@@ -36,50 +48,46 @@
 			});
 			
 			google.charts.load('current', {'packages':['gauge']});
-			google.charts.setOnLoadCallback(drawChart);
-
-			function drawChart() {
-				var data = google.visualization.arrayToDataTable([
-					['Label', 'Value']
-					,['Battery (v)', 0]
-					,['Response time (min)', 0]
-					// ,['Grid power', 0]
-				]);
-				
-				var batteryOptions = {
+			google.charts.setOnLoadCallback(drawCharts);
+			
+			var options = {
+				battery : {
 					width: 800, height: 240, minorTicks: 1,
 					redFrom: 10, redTo: 11,
 					yellowFrom:11, yellowTo: 12,
 					greenFrom: 12, greenTo: 14,
 					min: 10.0, max: 14.0
-				};
-				
-				var responseTimeOptions = {
+				},
+				time : {
 					width: 800, height: 240, minorTicks: 1,
 					redFrom: 360, redTo: 420,
 					yellowFrom:120, yellowTo: 360,
 					min: 0, max: 420
-				};
+				}
+			};
 
-				var chart = new google.visualization.Gauge(document.getElementById('chart1'));
+			function drawCharts() {
+				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
+					drawChart("Battery (v)", "chart1", options.battery, jsonData.repeaters.w5auu1.voltage, 0.2);
+					drawChart("Time (min)", "chart2", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
+				}
+				else {
+					setTimeout(function() { drawCharts(); }, 1000); // Try again in a second
+				}
+			}
+			function drawChart(strLabel, strDivId, objOptions, intValue, intFluctuate) {
+				var data = google.visualization.arrayToDataTable([
+					['Label', 'Value'],[strLabel, 0]
+				]);
 
-				chart.draw(data, batteryOptions);
+				var chart = new google.visualization.Gauge(document.getElementById(strDivId));
+				chart.draw(data, objOptions);
 
 				setInterval(function() {
-					var val = fluctuate(jsonData.repeaters.w5auu1.voltage, 0.2);
-					data.setValue(0, 1, val);
-					chart.draw(data, batteryOptions);
-					
-					val = jsonData.repeaters.w5auu1.lastReportedMinutesAgo
-					data.setValue(1, 1, val);
-					chart.draw(data, responseTimeOptions);
+					var val = fluctuate(jsonData.repeaters.w5auu1.voltage, intFluctuate);
+					data.setValue(0, 1, intValue);
+					chart.draw(data, objOptions);
 				}, 1000);
-				/*
-				setInterval(function() {
-				  data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-				  chart.draw(data, options);
-				}, 26000);
-				*/
 			}
 		</script>
 	</body>
