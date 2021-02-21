@@ -57,7 +57,7 @@
 				setInterval(function() {
 					var val = fluctuate(jsonData.repeaters.w5auu1.voltage, 0.1);
 					data.setValue(0, 1, val);
-					chart.draw(data, options);
+					chart.draw(data, batteryOptions);
 				}, 1000);
 				/*
 				setInterval(function() {
