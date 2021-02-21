@@ -13,14 +13,15 @@
 				color: #ffffff;
 			}
 			.chart {
-				width: 200; 
-				height: 200;
+				width: 200px; 
+				height: 200px;
 				float: left;
 			}
 			.title {
 				transform: rotate(-90deg);
 				font-family: 'Black Ops One';
 				float: left;
+				width: 200px;
 			}
 			.repeater {
 				clear: both;
@@ -128,10 +129,10 @@
 				chart.draw(data, objOptions);
 
 				setInterval(function() {
-					var val = fluctuate(jsonData.repeaters.w5auu1.voltage, intFluctuate);
-					data.setValue(0, 1, intValue);
+					var val = fluctuate(intValue, intFluctuate);
+					data.setValue(0, 1, val);
 					chart.draw(data, objOptions);
-				}, 1000);
+				}, Math.round(Math.random()*1000));
 			}
 		</script>
 	</body>
