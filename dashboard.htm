@@ -66,9 +66,9 @@
 				},
 				power : {
 					width: 300, height: 300, minorTicks: 1,
-					redFrom: 0, redTo: 50,
-					greenFrom: 50, greenTo: 100,
-					min: 0, max: 100
+					redFrom: 0, redTo: 2,
+					greenFrom: 2, greenTo: 4,
+					min: 0, max: 4
 				}
 			};
 
@@ -76,7 +76,7 @@
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
 					drawChart("Battery (v)", "chart1", options.battery, jsonData.repeaters.w5auu1.voltage, 0.2);
 					drawChart("Time (min)", "chart2", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
-					drawChart("Grid power", "chart3", options.power, jsonData.repeaters.w5auu1.powerValue, 2);
+					drawChart("Grid power", "chart3", options.power, jsonData.repeaters.w5auu1.powerValueForCharts, 2);
 				}
 				else {
 					setTimeout(function() { drawCharts(); }, 1000); // Try again in a second
