@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<div id="chart_div" style="width: 400px; height: 120px;"></div>
+		<script type="text/javascript">
+			function fluctuate(val, maxFluctuation){
+				var r = Math.random();
+				var flux;
+				
+				if (maxFluctuation < 1) {
+					flux = maxFluctuation;
+				}
+				else {
+					flux = Math.floor(r * (maxFluctuation+1));
+				}
+				
+				if ((r*100) % 2 == 0) {
+					rtnValue = n - flux;
+				}
+				else {
+					rtnValue = n + flux;
+				}
+				return rtnValue;
+			}			
+			function getJSONP(url, success) {
+				var ud = '_' + +new Date,
+					script = document.createElement('script'),
+					head = document.getElementsByTagName('head')[0] 
+						   || document.documentElement;
+
+				window[ud] = function(data) {
+					head.removeChild(script);
+					success && success(data);
+				};
+
+				script.src = url.replace('callback=?', 'callback=' + ud);
+				head.appendChild(script);
+			}
+			var json;
+
+			getJSONP('https://sitebygeorge.com/RepeaterWarning/json.php', function(data){
+				json = JSON.parse(data);
+			});  
+			
+			google.charts.load('current', {'packages':['gauge']});
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable([
+				  ['Label', 'Value'],
+				  ['Battery', 0]
+				  //,['Grid power', 0],
+				  //,['Response time', 0]
+				]);
+
+				var batteryOptions = {
+				  width: 400, height: 120, minorTicks: 1,
+				  redFrom: 0, redTo: 11,
+				  yellowFrom:11, yellowTo: 11.5
+				};
+
+				var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+				chart.draw(data, batteryOptions);
+
+				setInterval(function() {
+					var val = fluctuate(data.repeaters.w5auu1.voltage, 0.1);
+					data.setValue(0, 1, val);
+					chart.draw(data, options);
+				}, 1000);
+				/*
+				setInterval(function() {
+				  data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+				  chart.draw(data, options);
+				}, 5000);
+				setInterval(function() {
+				  data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+				  chart.draw(data, options);
+				}, 26000);
+				*/
+			}
+		</script>
+	</body>
+</html>
