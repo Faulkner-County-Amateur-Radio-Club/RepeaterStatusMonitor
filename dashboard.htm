@@ -46,9 +46,10 @@
 
 				var batteryOptions = {
 					width: 400, height: 120, minorTicks: 1,
-					redFrom: 0, redTo: 11,
-					yellowFrom:11, yellowTo: 11.5,
-					max: 14.0
+					redFrom: 10, redTo: 11,
+					yellowFrom:11, yellowTo: 12,
+					greenFrom: 12, greenTo: 14,
+					min: 10.0, max: 14.0
 				};
 
 				var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
