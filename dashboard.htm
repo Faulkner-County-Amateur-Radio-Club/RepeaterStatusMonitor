@@ -29,7 +29,7 @@
 		</style>
 		<div class="repeater">
 			<div class="title">W5AUU-1</div>
-			<div id="chart1a" class="chart"></div>
+			<div id="chart1a" class="chart">LOADING...</div>
 			<div id="chart1b" class="chart"></div>
 			<div id="chart1c" class="chart"></div>
 		</div>
@@ -111,18 +111,18 @@
 			var chart3a;
 			var chart3b;
 			var chart3c;
-			var chart1aData;
-			var chart1bData;
-			var chart1cData;
-			var chart2aData;
-			var chart2bData;
-			var chart2cData;
-			var chart3aData;
-			var chart3bData;
-			var chart3cData;
+			var chart1aData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart1bData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart1cData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart2aData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart2bData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart2cData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart3aData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart3bData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
+			var chart3cData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]]);
 			
 			function drawCharts() {
-				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
+				if (jsonData) { // Makes sure this doesn't run unless jsonData is defined (might still be loading)
 					drawChart("Battery (v)", chart1a, chart1aData, "chart1a", options.battery, jsonData.repeaters.w5auu1.voltage, 0);
 					drawChart("Time (min)", chart1b, chart1bData, "chart1b", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
 					drawChart("Grid power", chart1c, chart1cData, "chart1c", options.power, jsonData.repeaters.w5auu1.powerValueForCharts, 5);
@@ -136,13 +136,11 @@
 					drawChart("Grid power", chart3c, chart3cData, "chart3c", options.power, jsonData.repeaters.w5auu3.powerValueForCharts, 5);
 				}
 				else {
-					setTimeout(function() { drawCharts(); }, 1000); // Try again in a second
+					setTimeout(function() { drawCharts(); }, 500); // Try again later
 				}
 			}
 			function drawChart(strLabel, objChart, objChartData, strDivId, objOptions, intValue, intFluctuate) {
-				objChartData = google.visualization.arrayToDataTable([
-					['Label', 'Value'],[strLabel, 0]
-				]);
+				//objChartData = google.visualization.arrayToDataTable([['Label', 'Value'],[strLabel, 0]])
 
 				objChart = new google.visualization.Gauge(document.getElementById(strDivId));
 				var val = fluctuate(intValue, intFluctuate);
@@ -154,6 +152,10 @@
 				var val = fluctuate(intValue, intFluctuate);
 				objChartData.setValue(0, 1, val);
 				objChart.draw(objChartData, objOptions);
+			}
+			
+			function doit() {
+				updateChart(chart1a,chart1aData,options.battery, 10.1,0);
 			}
 		</script>
 	</body>
