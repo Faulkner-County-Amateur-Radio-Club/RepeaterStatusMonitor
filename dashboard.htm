@@ -27,31 +27,6 @@
 			<div id="chart3c" class="chart"></div>
 		</div>
 		<script type="text/javascript">
-			function fluctuate(val, maxFluctuation){
-				if (maxFluctuation == 0) {
-					return val;
-				}
-				else {
-					var r = Math.random();
-					var flux;
-
-					if (maxFluctuation < 1) {
-						flux = maxFluctuation;
-					}
-					else {
-						flux = Math.floor(r * (maxFluctuation+1));
-					}
-
-					if ((r*100) % 2 == 0) {
-						rtnValue = val - flux;
-					}
-					else {
-						rtnValue = val + flux;
-					}
-					return rtnValue;
-				}
-			}
-			
 			var jsonData; // Declared here to it is accessible globally
 			$.getJSON("https://sitebygeorge.com/RepeaterWarning/json.php", function(result){
 				jsonData = result;
@@ -103,23 +78,23 @@
 
 			function drawCharts() {
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
-					drawChart("Battery (v)", "chart1a", options.battery, "jsonData.repeaters.w5auu1.voltage", 0.1);
-					drawChart("Time (min)", "chart1b", options.time, "jsonData.repeaters.w5auu1.lastReportedMinutesAgo", 0);
-					drawChart("Grid power", "chart1c", options.power, "jsonData.repeaters.w5auu1.powerValueForCharts", 5);
+					drawChart("Battery (v)", "chart1a", options.battery, "jsonData.repeaters.w5auu1.voltage");
+					drawChart("Time (min)", "chart1b", options.time, "jsonData.repeaters.w5auu1.lastReportedMinutesAgo");
+					drawChart("Grid power", "chart1c", options.power, "jsonData.repeaters.w5auu1.powerValueForCharts");
 
-					drawChart("Battery (v)", "chart2a", options.battery, "jsonData.repeaters.w5auu2.voltage", 0.1);
-					drawChart("Time (min)", "chart2b", options.time, "jsonData.repeaters.w5auu2.lastReportedMinutesAgo", 0);
-					drawChart("Grid power", "chart2c", options.power, "jsonData.repeaters.w5auu2.powerValueForCharts", 5);
+					drawChart("Battery (v)", "chart2a", options.battery, "jsonData.repeaters.w5auu2.voltage");
+					drawChart("Time (min)", "chart2b", options.time, "jsonData.repeaters.w5auu2.lastReportedMinutesAgo");
+					drawChart("Grid power", "chart2c", options.power, "jsonData.repeaters.w5auu2.powerValueForCharts");
 					
-					drawChart("Battery (v)", "chart3a", options.battery, "jsonData.repeaters.w5auu3.voltage", 0.1);
-					drawChart("Time (min)", "chart3b", options.time, "jsonData.repeaters.w5auu3.lastReportedMinutesAgo", 0);
-					drawChart("Grid power", "chart3c", options.power, "jsonData.repeaters.w5auu3.powerValueForCharts", 5);
+					drawChart("Battery (v)", "chart3a", options.battery, "jsonData.repeaters.w5auu3.voltage");
+					drawChart("Time (min)", "chart3b", options.time, "jsonData.repeaters.w5auu3.lastReportedMinutesAgo");
+					drawChart("Grid power", "chart3c", options.power, "jsonData.repeaters.w5auu3.powerValueForCharts");
 				}
 				else {
 					setTimeout(function() { drawCharts(); }, 500); // Try again
 				}
 			}
-			function drawChart(strLabel, strDivId, objOptions, valuetoEval, intFluctuate) {
+			function drawChart(strLabel, strDivId, objOptions, valuetoEval) {
 				var data = google.visualization.arrayToDataTable([
 					['Label', 'Value'],[strLabel, 0]
 				]);
@@ -128,8 +103,7 @@
 				chart.draw(data, objOptions);
 
 				setInterval(function() {
-					var val = fluctuate(eval(valuetoEval), intFluctuate);
-					data.setValue(0, 1, val);
+					data.setValue(0, 1, eval(valuetoEval));
 					chart.draw(data, objOptions);
 				}, 2000);
 			}
