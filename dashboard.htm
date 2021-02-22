@@ -19,9 +19,6 @@
 			}
 			.title {
 				font-family: 'Black Ops One';
-				width: 100%;
-				background: linear-gradient(90deg, rgba(52,53,56,1) 0%, rgba(32,33,36,1) 39%);
-				padding: 5px;
 			}
 			.repeater {
 				clear: both;
@@ -102,7 +99,7 @@
 				}
 			};
 
-			var chart1a;
+			var chart1a; 
 			var chart1b;
 			var chart1c;
 			var chart2a;
@@ -111,49 +108,40 @@
 			var chart3a;
 			var chart3b;
 			var chart3c;
-			var chart1aData;
-			var chart1bData;
-			var chart1cData;
-			var chart2aData;
-			var chart2bData;
-			var chart2cData;
-			var chart3aData;
-			var chart3bData;
-			var chart3cData;
 			
 			function drawCharts() {
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
-					drawChart("Battery (v)", chart1a, chart1aData, "chart1a", options.battery, jsonData.repeaters.w5auu1.voltage, 0);
-					drawChart("Time (min)", chart1b, chart1bData, "chart1b", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
-					drawChart("Grid power", chart1c, chart1cData, "chart1c", options.power, jsonData.repeaters.w5auu1.powerValueForCharts, 5);
+					drawChart("Battery (v)", chart1a, "chart1a", options.battery, jsonData.repeaters.w5auu1.voltage, 0);
+					drawChart("Time (min)", chart1b, "chart1b", options.time, jsonData.repeaters.w5auu1.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", chart1c, "chart1c", options.power, jsonData.repeaters.w5auu1.powerValueForCharts, 5);
 
-					drawChart("Battery (v)", chart2a, chart2aData, "chart2a", options.battery, jsonData.repeaters.w5auu2.voltage, 0);
-					drawChart("Time (min)", chart2b, chart2bData, "chart2b", options.time, jsonData.repeaters.w5auu2.lastReportedMinutesAgo, 0);
-					drawChart("Grid power", chart2c, chart2cData, "chart2c", options.power, jsonData.repeaters.w5auu2.powerValueForCharts, 5);
+					drawChart("Battery (v)", chart2a, "chart2a", options.battery, jsonData.repeaters.w5auu2.voltage, 0);
+					drawChart("Time (min)", chart2b, "chart2b", options.time, jsonData.repeaters.w5auu2.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", chart2c, "chart2c", options.power, jsonData.repeaters.w5auu2.powerValueForCharts, 5);
 					
-					drawChart("Battery (v)", chart3a, chart3aData, "chart3a", options.battery, jsonData.repeaters.w5auu3.voltage, 0);
-					drawChart("Time (min)", chart3b, chart3bData, "chart3b", options.time, jsonData.repeaters.w5auu3.lastReportedMinutesAgo, 0);
-					drawChart("Grid power", chart3c, chart3cData, "chart3c", options.power, jsonData.repeaters.w5auu3.powerValueForCharts, 5);
+					drawChart("Battery (v)", chart3a, "chart3a", options.battery, jsonData.repeaters.w5auu3.voltage, 0);
+					drawChart("Time (min)", chart3b, "chart3b", options.time, jsonData.repeaters.w5auu3.lastReportedMinutesAgo, 0);
+					drawChart("Grid power", chart3c, "chart3c", options.power, jsonData.repeaters.w5auu3.powerValueForCharts, 5);
 				}
 				else {
 					setTimeout(function() { drawCharts(); }, 1000); // Try again in a second
 				}
 			}
-			function drawChart(strLabel, objChart, objChartData, strDivId, objOptions, intValue, intFluctuate) {
-				objChartData = google.visualization.arrayToDataTable([
+			function drawChart(strLabel, objChart, strDivId, objOptions, intValue, intFluctuate) {
+				var data = google.visualization.arrayToDataTable([
 					['Label', 'Value'],[strLabel, 0]
 				]);
 
 				objChart = new google.visualization.Gauge(document.getElementById(strDivId));
-				var val = fluctuate(intValue, intFluctuate);
-				objChartData.setValue(0, 1, val);
-				objChart.draw(objChartData, objOptions);
-			}
-			
-			function updateChart(objChart, objChartData, objOptions, intValue, intFluctuate) {
-				var val = fluctuate(intValue, intFluctuate);
-				objChartData.setValue(0, 1, val);
-				objChart.draw(objChartData, objOptions);
+				objChart.draw(data, objOptions);
+
+				/*
+				setInterval(function() {
+					var val = fluctuate(intValue, intFluctuate);
+					data.setValue(0, 1, val);
+					objChart.draw(data, objOptions);
+				}, Math.round(Math.random()*10000));
+				*/
 			}
 		</script>
 	</body>
