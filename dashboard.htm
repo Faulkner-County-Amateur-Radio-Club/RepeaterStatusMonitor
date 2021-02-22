@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title></title>
+		<title>Repeater Status Dashboard</title>
 	</head>
 	<body>
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -10,9 +10,9 @@
 		<link href="dashboard.css" rel="stylesheet">
 		<div class="repeater">
 			<div class="title">W5AUU-1</div>
-			<div id="chart1a" class="chart"></div>
-			<div id="chart1b" class="chart"></div>
-			<div id="chart1c" class="chart"></div>
+			<div id="chart1a" class="chart">PLEASE WAIT...</div>
+			<div id="chart1b" class="chart">LOADING...</div>
+			<div id="chart1c" class="chart">HANG ON...</div>
 		</div>
 		<div class="repeater">
 			<div class="title">W5AUU-2</div>
@@ -113,7 +113,7 @@
 					var val = fluctuate(intValue, intFluctuate);
 					data.setValue(0, 1, val);
 					chart.draw(data, objOptions);
-				}, Math.round(Math.random()*10000));
+				}, 1000);
 			}
 		</script>
 	</body>
