@@ -1,6 +1,7 @@
 <?php 
 
 class Repeaters {
+	public $jsonObject;
 	public $jsonUrl;
 	public $reportTime;
 	public $w5auu1;
@@ -10,9 +11,9 @@ class Repeaters {
 	function __construct() {
 		$this->jsonUrl = "https://api.aprs.fi/api/get?name=W5AUU-1,W5AUU-2,W5AUU-3&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";		
 		$jsonData = $this->getJson($this->jsonUrl); 
-		$jsonObject = json_decode($jsonData, true);
+		$this->jsonObject = json_decode($jsonData, true);
 		
-		$this->$w5auu1 = $jsonObject["entries"][0];
+		$this->$w5auu1 = $jsonObject["entries"][0]["lasttime"];
 		$this->$w5auu2 = $jsonObject["entries"][1];
 		$this->$w5auu3 = $jsonObject["entries"][2];
 		
