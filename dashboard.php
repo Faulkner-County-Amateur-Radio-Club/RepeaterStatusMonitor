@@ -3,9 +3,9 @@
 function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 	echo "// --- $strDivId ------------------------------\r\n";
 	echo "var data$strDivId = google.visualization.arrayToDataTable([\r\n";
-	echo "	['Label', 'Value'],[$strLabel, 0]\r\n";
+	echo "	['Label', 'Value'],['$strLabel', 0]\r\n";
 	echo "]);\r\n";
-	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById($strDivId));\r\n";
+	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById('$strDivId'));\r\n";
 	echo "chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
 	echo "setInterval(function() {\r\n";
 	echo "	data$strDivId.setValue(0, 1, $valuetoDisplay);\r\n";
