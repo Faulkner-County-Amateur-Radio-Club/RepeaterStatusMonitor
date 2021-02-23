@@ -1,17 +1,16 @@
 <?php
 
 function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
-	echo " ";
-	echo "// --- $strDivId ------------------------------";
-	echo "var data$strDivId = google.visualization.arrayToDataTable([";
-	echo "	['Label', 'Value'],[$strLabel, 0]";
-	echo "]);";
-	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById($strDivId));";
-	echo "chart$strDivId.draw(data$strDivId, $objOptions);";
-	echo "setInterval(function() {";
-	echo "	data$strDivId.setValue(0, 1, $valuetoDisplay);";
-	echo "	chart$strDivId.draw(data$strDivId, $objOptions);";
-	echo "}, 2000);";
+	echo "// --- $strDivId ------------------------------\r\n";
+	echo "var data$strDivId = google.visualization.arrayToDataTable([\r\n";
+	echo "	['Label', 'Value'],[$strLabel, 0]\r\n";
+	echo "]);\r\n";
+	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById($strDivId));\r\n";
+	echo "chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
+	echo "setInterval(function() {\r\n";
+	echo "	data$strDivId.setValue(0, 1, $valuetoDisplay);\r\n";
+	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
+	echo "}, 2000);\r\n\r\n";
 }
 
 ?><html>
