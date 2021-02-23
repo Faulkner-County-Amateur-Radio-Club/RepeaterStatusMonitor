@@ -10,7 +10,7 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 	echo "setInterval(function() {\r\n";
 	echo "	data$strDivId.setValue(0, 1, $valuetoDisplay);\r\n";
 	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
-	echo "}, 2000);\r\n\r\n";
+	echo "}, Math.round(Math.random()*10));\r\n\r\n";
 }
 
 function writeCommonOptions() {
@@ -52,6 +52,7 @@ function writeCommonOptions() {
 		</div>
 		<script type="text/javascript">
 			var jsonData; // Declared here to it is accessible globally
+			
 			$.getJSON("https://sitebygeorge.com/RepeaterWarning/json.php", function(result){
 				jsonData = result;
 			});
