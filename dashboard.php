@@ -16,7 +16,7 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay, $maxF
 	echo "function update$strDivId() {\r\n";
 	echo "	data$strDivId.setValue(0, 1, fluctuate($valuetoDisplay, $maxFlux));\r\n";
 	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
-	echo "	setTimeout(update$strDivId(), Math.round(Math.random()*10000));\r\n";
+	echo "	setTimeout(function() { update$strDivId(); }, Math.round(Math.random()*10000));\r\n";
 	echo "}\r\n";
 	echo "update$strDivId();";
 	echo "\r\n\r\n";
