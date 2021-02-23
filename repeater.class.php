@@ -115,7 +115,7 @@ class Repeater {
 	}
 	function doHealthCheck() {
 		global $recipients;
-		var sendAlerts = false;
+		$sendAlerts = false;
 		
 		// Recipients are defined in the config.php
 		$currentStatePower = 1;
@@ -150,7 +150,7 @@ class Repeater {
 				$sendAlertTo .= $recipients["typicalSuspects"];
 			}
 			
-			if (sendAlerts) {
+			if ($sendAlerts) {
 				if (!mail($sendAlertTo, "", $this->poorHealthMessage, "from: w5auu@ddse.net")) {
 					echo "Error sending email.";
 				} 
@@ -171,7 +171,7 @@ class Repeater {
 			
 			if ($this->poorHealthMessage != "") {
 				$sendAlertTo .= $recipients["typicalSuspects"];
-				if (sendAlerts) {
+				if ($sendAlerts) {
 					if (!mail($sendAlertTo, "", "Good news! " . $this->poorHealthMessage, "from: w5auu@ddse.net")) {
 						echo "Error sending email.";
 					}
