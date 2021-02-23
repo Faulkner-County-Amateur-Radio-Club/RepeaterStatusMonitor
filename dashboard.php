@@ -1,13 +1,13 @@
 <?php
 
 function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
+	echo " ";
+	echo "// --- $strDivId ------------------------------"
 	echo "var data$strDivId = google.visualization.arrayToDataTable([";
 	echo "	['Label', 'Value'],[$strLabel, 0]";
 	echo "]);";
-
 	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById($strDivId));";
 	echo "chart$strDivId.draw(data$strDivId, $objOptions);";
-
 	echo "setInterval(function() {";
 	echo "	data$strDivId.setValue(0, 1, $valuetoDisplay);";
 	echo "	chart$strDivId.draw(data$strDivId, $objOptions);";
@@ -96,17 +96,17 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
 <?php
 					
-drawChart("Battery (v)", "chart1a", "options.battery", "jsonData.repeaters.w5auu1.voltage");
-drawChart("Time (min)", "chart1b", "options.time", "jsonData.repeaters.w5auu1.lastReportedMinutesAgo");
-drawChart("Grid power", "chart1c", "options.power", "jsonData.repeaters.w5auu1.powerValueForCharts");
+makeDrawChart("Battery (v)", "chart1a", "options.battery", "jsonData.repeaters.w5auu1.voltage");
+makeDrawChart("Time (min)", "chart1b", "options.time", "jsonData.repeaters.w5auu1.lastReportedMinutesAgo");
+makeDrawChart("Grid power", "chart1c", "options.power", "jsonData.repeaters.w5auu1.powerValueForCharts");
 
-drawChart("Battery (v)", "chart2a", "options.battery", "jsonData.repeaters.w5auu2.voltage");
-drawChart("Time (min)", "chart2b", "options.time", "jsonData.repeaters.w5auu2.lastReportedMinutesAgo");
-drawChart("Grid power", "chart2c", "options.power", "jsonData.repeaters.w5auu2.powerValueForCharts");
+makeDrawChart("Battery (v)", "chart2a", "options.battery", "jsonData.repeaters.w5auu2.voltage");
+makeDrawChart("Time (min)", "chart2b", "options.time", "jsonData.repeaters.w5auu2.lastReportedMinutesAgo");
+makeDrawChart("Grid power", "chart2c", "options.power", "jsonData.repeaters.w5auu2.powerValueForCharts");
 
-drawChart("Battery (v)", "chart3a", "options.battery", "jsonData.repeaters.w5auu3.voltage");
-drawChart("Time (min)", "chart3b", "options.time", "jsonData.repeaters.w5auu3.lastReportedMinutesAgo");
-drawChart("Grid power", "chart3c", "options.power", "jsonData.repeaters.w5auu3.powerValueForCharts");
+makeDrawChart("Battery (v)", "chart3a", "options.battery", "jsonData.repeaters.w5auu3.voltage");
+makeDrawChart("Time (min)", "chart3b", "options.time", "jsonData.repeaters.w5auu3.lastReportedMinutesAgo");
+makeDrawChart("Grid power", "chart3c", "options.power", "jsonData.repeaters.w5auu3.powerValueForCharts");
 					
 ?>
 					
