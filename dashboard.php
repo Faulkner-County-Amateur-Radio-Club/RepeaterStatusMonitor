@@ -1,6 +1,6 @@
 <?php
 
-function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
+function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay, $maxFlux) {
 	echo "// --- $strDivId ------------------------------\r\n";
 	echo "var data$strDivId = google.visualization.arrayToDataTable([\r\n";
 	echo "	['Label', 'Value'],['$strLabel', 0]\r\n";
@@ -8,7 +8,7 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById('$strDivId'));\r\n";
 	echo "chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
 	echo "setInterval(function() {\r\n";
-	echo "	data$strDivId.setValue(0, 1, $valuetoDisplay);\r\n";
+	echo "	data$strDivId.setValue(0, 1, fluctuate($valuetoDisplay, $maxFlux);\r\n";
 	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
 	echo "}, Math.round(Math.random()*10000));\r\n\r\n";
 }
@@ -53,6 +53,31 @@ function writeCommonOptions() {
 		<script type="text/javascript">
 			var jsonData; // Declared here to it is accessible globally
 			
+			function fluctuate(val, maxFluctuation){
+				if (maxFluctuation == 0) {
+					return val;
+				}
+				else {
+					var r = Math.random();
+					var flux;
+
+					if (maxFluctuation < 1) {
+						flux = maxFluctuation;
+					}
+					else {
+						flux = Math.floor(r * (maxFluctuation+1));
+					}
+
+					if ((r*100) % 2 == 0) {
+						rtnValue = val - flux;
+					}
+					else {
+						rtnValue = val + flux;
+					}
+					return rtnValue;
+				}
+			}
+			
 			$.getJSON("https://sitebygeorge.com/RepeaterWarning/json.php", function(result){
 				jsonData = result;
 			});
@@ -93,17 +118,17 @@ function writeCommonOptions() {
 				if (jsonData) { // Don't run this unless jsonData is defined (might still be loading)
 <?php
 					
-makeDrawChart("Battery (v)", "chart1a", "options.battery", "jsonData.repeaters.w5auu1.voltage");
-makeDrawChart("Time (min)", "chart1b", "options.time", "jsonData.repeaters.w5auu1.lastReportedMinutesAgo");
-makeDrawChart("Grid power", "chart1c", "options.power", "jsonData.repeaters.w5auu1.powerValueForCharts");
+makeDrawChart("Battery (v)", "chart1a", "options.battery", "jsonData.repeaters.w5auu1.voltage",0);
+makeDrawChart("Time (min)", "chart1b", "options.time", "jsonData.repeaters.w5auu1.lastReportedMinutesAgo",0);
+makeDrawChart("Grid power", "chart1c", "options.power", "jsonData.repeaters.w5auu1.powerValueForCharts",3);
 
-makeDrawChart("Battery (v)", "chart2a", "options.battery", "jsonData.repeaters.w5auu2.voltage");
-makeDrawChart("Time (min)", "chart2b", "options.time", "jsonData.repeaters.w5auu2.lastReportedMinutesAgo");
-makeDrawChart("Grid power", "chart2c", "options.power", "jsonData.repeaters.w5auu2.powerValueForCharts");
+makeDrawChart("Battery (v)", "chart2a", "options.battery", "jsonData.repeaters.w5auu2.voltage",0);
+makeDrawChart("Time (min)", "chart2b", "options.time", "jsonData.repeaters.w5auu2.lastReportedMinutesAgo",0);
+makeDrawChart("Grid power", "chart2c", "options.power", "jsonData.repeaters.w5auu2.powerValueForCharts",3);
 
-makeDrawChart("Battery (v)", "chart3a", "options.battery", "jsonData.repeaters.w5auu3.voltage");
-makeDrawChart("Time (min)", "chart3b", "options.time", "jsonData.repeaters.w5auu3.lastReportedMinutesAgo");
-makeDrawChart("Grid power", "chart3c", "options.power", "jsonData.repeaters.w5auu3.powerValueForCharts");
+makeDrawChart("Battery (v)", "chart3a", "options.battery", "jsonData.repeaters.w5auu3.voltage",0);
+makeDrawChart("Time (min)", "chart3b", "options.time", "jsonData.repeaters.w5auu3.lastReportedMinutesAgo",0);
+makeDrawChart("Grid power", "chart3c", "options.power", "jsonData.repeaters.w5auu3.powerValueForCharts",3);
 					
 ?>
 					
