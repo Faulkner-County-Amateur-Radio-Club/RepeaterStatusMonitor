@@ -69,6 +69,28 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
         			}
 				},
 				time : {
+					width: 200, height: 200, minorTicks: 1,
+					redFrom: 10, redTo: 11,
+					yellowFrom:11, yellowTo: 12,
+					greenFrom: 12, greenTo: 14,
+					min: 10.0, max: 14.0,
+					animation: {
+						easing: 'inAndOut',
+						duration: 1000
+        			}
+				},
+				power : {
+					width: 200, height: 200, minorTicks: 1,
+					redFrom: 10, redTo: 11,
+					yellowFrom:11, yellowTo: 12,
+					greenFrom: 12, greenTo: 14,
+					min: 10.0, max: 14.0,
+					animation: {
+						easing: 'inAndOut',
+						duration: 1000
+        			}
+				},
+				otime : {
 					width: 200, height: 200, minorTicks: 1, majorTicks: 60,
 					redFrom: 360, redTo: 420,
 					yellowFrom:120, yellowTo: 360,
@@ -79,7 +101,7 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 						duration: 1000
         			}
 				},
-				power : {
+				opower : {
 					width: 200, height: 200, majorTicks: 1,
 					redFrom: 0, redTo: 20,
 					greenFrom: 20, greenTo: 40,
