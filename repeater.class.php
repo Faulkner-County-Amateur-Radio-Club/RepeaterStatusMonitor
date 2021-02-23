@@ -6,6 +6,7 @@ class Repeater {
 	// Note that these are in alphabetical order
 	public $description;
 	public $frequency;
+	public $jsonUrl;
 	public $lastReportedMinutesAgo;
 	public $lastReportedTime;
 	public $name;
@@ -41,11 +42,11 @@ class Repeater {
 		$this->loadData();
 	}
 	function loadData() {
-		$jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
+		$this->jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 		$jsonData = file_get_contents($jsonUrl); 
 		$jsonObject = json_decode($jsonData, true);
-		$this->timeLastReported = $jsonObject["entries"][0]["lasttime"];
-		$this->lastReportedMinutesAgo = round((time() - $this->timeLastReported)/60); 
+		$this->lastReportedTime = $jsonObject["entries"][0]["lasttime"];
+		$this->lastReportedMinutesAgo = round((time() - $this->lastReportedTime)/60); 
 		$this->status = $jsonObject["entries"][0]["status"];
 
 		$this->telemetryURL = "https://aprs.fi/telemetry/" . $this->name . "&key=100665.Mj8HjUvXqEHYjrV6";
