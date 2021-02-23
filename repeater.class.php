@@ -43,7 +43,7 @@ class Repeater {
 	}
 	function loadData() {
 		$this->jsonUrl = "https://api.aprs.fi/api/get?name=" . $this->name . "&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
-		$jsonData = file_get_contents($jsonUrl); 
+		$jsonData = file_get_contents($this->jsonUrl); 
 		$jsonObject = json_decode($jsonData, true);
 		$this->lastReportedTime = $jsonObject["entries"][0]["lasttime"];
 		$this->lastReportedMinutesAgo = round((time() - $this->lastReportedTime)/60); 
