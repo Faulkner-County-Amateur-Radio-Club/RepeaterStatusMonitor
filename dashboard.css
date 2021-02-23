@@ -12,7 +12,7 @@ body {
 .title {
 	font-family: 'Black Ops One';
 	width: 100%;
-	background: linear-gradient(90deg, rgba(52,53,56,1) 0%, rgba(32,33,36,1) 39%);
+	background: linear-gradient(90deg, rgba(52,53,56,1) 0%, rgba(32,33,36,1) 75%);
 	padding: 5px;
 }
 .repeater {
