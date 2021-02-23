@@ -2,7 +2,7 @@
 
 function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 	echo " ";
-	echo "// --- $strDivId ------------------------------"
+	echo "// --- $strDivId ------------------------------";
 	echo "var data$strDivId = google.visualization.arrayToDataTable([";
 	echo "	['Label', 'Value'],[$strLabel, 0]";
 	echo "]);";
