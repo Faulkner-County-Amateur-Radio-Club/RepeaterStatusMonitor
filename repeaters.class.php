@@ -7,19 +7,22 @@ class Repeaters {
 	public $w5auu1;
 	public $w5auu2;
 	public $w5auu3;
+	public $telemetry;
 
 	function __construct() {
 		$this->jsonUrl = "https://api.aprs.fi/api/get?name=W5AUU-1,W5AUU-2,W5AUU-3&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";		
 		$jsonData = $this->getJson($this->jsonUrl); 
 		$this->jsonObject = json_decode($jsonData, true);
 		
-		$this->$w5auu1 = $jsonObject["entries"][0]["lasttime"];
-		$this->$w5auu2 = $jsonObject["entries"][1];
-		$this->$w5auu3 = $jsonObject["entries"][2];
+		$this->w5auu1 = $this->jsonObject["entries"][0];
+		$this->w5auu2 = $this->jsonObject["entries"][1];
+		$this->w5auu3 = $this->jsonObject["entries"][2];
 		
-		//$this->w5auu1 = new Repeater("W5AUU-1", "146.97 repeater", "146.97", 1, 5, 50, 2);
-		//$this->w5auu2 = new Repeater("W5AUU-2", "OEM repeater shack", "147.03", 1, 5, 50, 2);
-		//$this->w5auu3 = new Repeater("W5AUU-3", "Greenbrier repeater shack", "146.625", 1, 3, 100, 2);
+		$this->telemetry = new stdClass();
+		
+		$this->parseTelemetry("W5AUU-1", 1, 5, 2);
+		$this->parseTelemetry("W5AUU-2", 1, 5, 2);
+		$this->parseTelemetry("W5AUU-3", 1, 3, 2);
 
 		date_default_timezone_set("America/Chicago");
 		$this->reportTime = date("d/m/Y h:i:sa");
@@ -50,6 +53,26 @@ class Repeaters {
 			fwrite($fh, $json);
 			fclose($fh);
 			return $json;
+	}
+	function parseTelemetry($repeaterName, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryTempuratureChannel) {
+		$this->telemetry->$repeaterName = new stdClass();
+		$telemetryUrl = "https://aprs.fi/telemetry/" . $repeaterName . "&key=100665.Mj8HjUvXqEHYjrV6";
+		$telemetryPage = file_get_contents($telemetryUrl,true);
+
+		$this->telemetry->$repeaterName->telemetryURL = $telemetryUrl;
+		echo "<pre>$telemetryPage</pre>";
+		
+		// voltage
+		preg_match("/Channel\s" . $telemetryVoltageChannel . "\:\s[0-9]+/", $telemetryPage, $match);
+		$this->telemetry->$repeaterName->voltage = number_format(substr($match[0],11));
+
+		// grid power status
+		preg_match("/Channel\s" . $telemetryGridPowerStatusChannel . "\:\s[0-9]+/", $telemetryPage, $match);
+		$this->telemetry->$repeaterName->powerValue = number_format(substr($match[0],11));
+		
+		// tempurature
+		preg_match("/Channel\s" . $telemetryTempuratureChannel . "\:\s[0-9]+/", $telemetryPage, $match);
+		$this->telemetry->$repeaterName->tempurature = number_format(substr($match[0],11));
 	}
 }
 
