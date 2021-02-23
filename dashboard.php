@@ -13,6 +13,15 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 	echo "}, 2000);\r\n\r\n";
 }
 
+function writeCommonOptions() {
+	echo "width: 200, height: 200, minorTicks: 1,\r\n";
+	echo "min: 10.0, max: 14.0,\r\n";
+	echo "animation: {\r\n";
+	echo "	easing: 'inAndOut',\r\n";
+	echo "	duration: 1000\r\n";
+	echo "}\r\n";
+}
+
 ?><html>
 	<head>
 		<title>Repeater Status Dashboard</title>
@@ -58,58 +67,24 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 			
 			var options = {
 				battery : {
-					width: 200, height: 200, minorTicks: 1,
+					<?php writeCommonOptions() ?>,
 					redFrom: 10, redTo: 11,
 					yellowFrom:11, yellowTo: 12,
 					greenFrom: 12, greenTo: 14,
-					min: 10.0, max: 14.0,
-					animation: {
-						easing: 'inAndOut',
-						duration: 1000
-        			}
+					min: 10.0, max: 14.0
 				},
 				time : {
-					width: 200, height: 200, minorTicks: 1,
-					redFrom: 10, redTo: 11,
-					yellowFrom:11, yellowTo: 12,
-					greenFrom: 12, greenTo: 14,
-					min: 10.0, max: 14.0,
-					animation: {
-						easing: 'inAndOut',
-						duration: 1000
-        			}
-				},
-				power : {
-					width: 200, height: 200, minorTicks: 1,
-					redFrom: 10, redTo: 11,
-					yellowFrom:11, yellowTo: 12,
-					greenFrom: 12, greenTo: 14,
-					min: 10.0, max: 14.0,
-					animation: {
-						easing: 'inAndOut',
-						duration: 1000
-        			}
-				},
-				otime : {
-					width: 200, height: 200, minorTicks: 1, majorTicks: 60,
+					<?php writeCommonOptions() ?>,
 					redFrom: 360, redTo: 420,
 					yellowFrom:120, yellowTo: 360,
 					greenFrom: 0, greenTo: 120,
-					min: 0, max: 420,
-					animation: {
-						easing: 'inAndOut',
-						duration: 1000
-        			}
+					min: 0, max: 420
 				},
-				opower : {
-					width: 200, height: 200, majorTicks: 1,
+				power : {
+					<?php writeCommonOptions() ?>,
 					redFrom: 0, redTo: 20,
 					greenFrom: 20, greenTo: 40,
-					min: 0, max: 40,
-					animation: {
-						easing: 'inAndOut',
-						duration: 1000
-        			}
+					min: 0, max: 40
 				}
 			};
 
