@@ -33,19 +33,19 @@ function writeCommonOptions() {
 		<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
 		<link href="dashboard.css" rel="stylesheet">
 		<div class="repeater">
-			<div class="title">W5AUU-1</div>
+			<div class="title">W5AUU-1 - 146.97 - Conway / Clearwell</div>
 			<div id="chart1a" class="chart">PLEASE WAIT...</div>
 			<div id="chart1b" class="chart">LOADING...</div>
 			<div id="chart1c" class="chart">HANG ON...</div>
 		</div>
 		<div class="repeater">
-			<div class="title">W5AUU-2</div>
+			<div class="title">W5AUU-2 - 147.03 - Conway / OEM</div>
 			<div id="chart2a" class="chart"></div>
 			<div id="chart2b" class="chart"></div>
 			<div id="chart2c" class="chart"></div>
 		</div>
 		<div class="repeater">
-			<div class="title">W5AUU-3</div>
+			<div class="title">W5AUU-3 - 146.625 - Greenbrier</div>
 			<div id="chart3a" class="chart"></div>
 			<div id="chart3b" class="chart"></div>
 			<div id="chart3c" class="chart"></div>
