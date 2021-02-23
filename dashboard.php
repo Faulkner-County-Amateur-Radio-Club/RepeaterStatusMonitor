@@ -6,13 +6,7 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay, $maxF
 	echo "	['Label', 'Value'],['$strLabel', 0]\r\n";
 	echo "]);\r\n";
 	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById('$strDivId'));\r\n";
-	echo "chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
-	
-//	echo "setInterval(function() {\r\n";
-//	echo "	data$strDivId.setValue(0, 1, fluctuate($valuetoDisplay, $maxFlux));\r\n";
-//	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
-//	echo "}, Math.round(Math.random()*10000));";
-	
+	echo "chart$strDivId.draw(data$strDivId, $objOptions);\r\n";	
 	echo "function update$strDivId() {\r\n";
 	echo "	data$strDivId.setValue(0, 1, fluctuate($valuetoDisplay, $maxFlux));\r\n";
 	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
