@@ -15,8 +15,8 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay) {
 
 function writeCommonOptions() {
 	echo "width: 200, height: 200, minorTicks: 1,\r\n";
-	echo "min: 10.0, max: 14.0,\r\n";
-	//echo "animation: {\r\n";
+	echo "min: 10.0, max: 14.0\r\n";
+	//echo ",animation: {\r\n";
 	//echo "	easing: 'inAndOut',\r\n";
 	//echo "	duration: 1000\r\n";
 	//echo "}\r\n";
