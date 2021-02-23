@@ -7,19 +7,24 @@ function makeDrawChart($strLabel, $strDivId, $objOptions, $valuetoDisplay, $maxF
 	echo "]);\r\n";
 	echo "var chart$strDivId = new google.visualization.Gauge(document.getElementById('$strDivId'));\r\n";
 	echo "chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
-	echo "setInterval(function() {\r\n";
+	
+//	echo "setInterval(function() {\r\n";
+//	echo "	data$strDivId.setValue(0, 1, fluctuate($valuetoDisplay, $maxFlux));\r\n";
+//	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
+//	echo "}, Math.round(Math.random()*10000));";
+	
+	echo "function update$strDivId() {\r\n";
 	echo "	data$strDivId.setValue(0, 1, fluctuate($valuetoDisplay, $maxFlux));\r\n";
 	echo "	chart$strDivId.draw(data$strDivId, $objOptions);\r\n";
-	echo "}, Math.round(Math.random()*10000));\r\n\r\n";
+	echo "	setTimeout(update$strDivId(), Math.round(Math.random()*10000));\r\n";
+	echo "}\r\n";
+	echo "update$strDivId();";
+	echo "\r\n\r\n";
 }
 
 function writeCommonOptions() {
 	echo "width: 200, height: 200, minorTicks: 1,\r\n";
 	echo "min: 10.0, max: 14.0\r\n";
-	//echo ",animation: {\r\n";
-	//echo "	easing: 'inAndOut',\r\n";
-	//echo "	duration: 1000\r\n";
-	//echo "}\r\n";
 }
 
 ?><html>
