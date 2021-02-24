@@ -141,7 +141,7 @@ class Repeater {
 	}
 	function doHealthCheck() {
 		global $recipients;
-		$sendAlerts = true;
+		$sendAlerts = false;
 		
 		// Recipients are defined in the config.php
 		$currentStatePower = 1;
