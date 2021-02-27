@@ -19,6 +19,7 @@ class Repeaters {
 		$this->w5auu3 = $this->jsonObject["entries"][2];
 		
 		$this->telemetry = new stdClass();
+		$this->getTelemetry();
 		
 		$this->parseTelemetry("W5AUU-1", 1, 5, 2);
 		$this->parseTelemetry("W5AUU-2", 1, 5, 2);
@@ -54,25 +55,19 @@ class Repeaters {
 			fclose($fh);
 			return $json;
 	}
+	function getTelemetry() {
+		$jsonData = file_get_contents("/root/APRS/repeaterTelemetry.json",true);
+		$this->telemetry->json = json_decode($jsonData, true);
+	}
 	function parseTelemetry($repeaterName, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryTempuratureChannel) {
-		$this->telemetry->$repeaterName = new stdClass();
-		$telemetryUrl = "https://aprs.fi/telemetry/" . $repeaterName . "&key=100665.Mj8HjUvXqEHYjrV6";
-		$telemetryPage = file_get_contents($telemetryUrl,true);
-
-		$this->telemetry->$repeaterName->telemetryURL = $telemetryUrl;
-		echo "<pre>$telemetryPage</pre>";
+		$telemetryVoltageChannel = "telemetry" . $telemetryVoltageChannel;
+		$telemetryGridPowerStatusChannel = "telemetry" . $telemetryGridPowerStatusChannel;
+		$telemetryTempuratureChannel = "telemetry" . $telemetryTempuratureChannel;
 		
-		// voltage
-		preg_match("/Channel\s" . $telemetryVoltageChannel . "\:\s[0-9]+/", $telemetryPage, $match);
-		$this->telemetry->$repeaterName->voltage = number_format(substr($match[0],11));
-
-		// grid power status
-		preg_match("/Channel\s" . $telemetryGridPowerStatusChannel . "\:\s[0-9]+/", $telemetryPage, $match);
-		$this->telemetry->$repeaterName->powerValue = number_format(substr($match[0],11));
-		
-		// tempurature
-		preg_match("/Channel\s" . $telemetryTempuratureChannel . "\:\s[0-9]+/", $telemetryPage, $match);
-		$this->telemetry->$repeaterName->tempurature = number_format(substr($match[0],11));
+		$this->telemetry->$repeaterName = new stdClass(); 
+		$this->telemetry->$repeaterName->voltage = $this->telemetry->json->$repeaterName->$telemetryVoltageChannel;
+		$this->telemetry->$repeaterName->gridPower = $this->telemetry->json->$repeaterName->$telemetryGridPowerStatusChannel;
+		$this->telemetry->$repeaterName->tempurature = $this->telemetry->json->$repeaterName->$telemetryTempuratureChannel;
 	}
 }
 
