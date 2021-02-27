@@ -21,9 +21,9 @@ class Repeaters {
 		$this->telemetry = new stdClass();
 		$this->getTelemetry();
 		
-		$this->parseTelemetry("W5AUU-1", 1, 5, 2);
-		$this->parseTelemetry("W5AUU-2", 1, 5, 2);
-		$this->parseTelemetry("W5AUU-3", 1, 3, 2);
+		$this->parseTelemetry("W5AUU-1", "1", "5", "2");
+		$this->parseTelemetry("W5AUU-2", "1", "5", "2");
+		$this->parseTelemetry("W5AUU-3", "1", "3", "2");
 
 		date_default_timezone_set("America/Chicago");
 		$this->reportTime = date("d/m/Y h:i:sa");
@@ -56,18 +56,18 @@ class Repeaters {
 			return $json;
 	}
 	function getTelemetry() {
-		$jsonData = file_get_contents("/root/APRS/repeaterTelemetry.json",true);
-		$this->telemetry->json = json_decode($jsonData, true);
+		$jsonData = file_get_contents("repeaterTelemetry.json",true);
+		$this->telemetry->raw = json_decode($jsonData, true);
 	}
 	function parseTelemetry($repeaterName, $telemetryVoltageChannel, $telemetryGridPowerStatusChannel, $telemetryTempuratureChannel) {
 		$telemetryVoltageChannel = "telemetry" . $telemetryVoltageChannel;
 		$telemetryGridPowerStatusChannel = "telemetry" . $telemetryGridPowerStatusChannel;
 		$telemetryTempuratureChannel = "telemetry" . $telemetryTempuratureChannel;
-		
-		$this->telemetry->$repeaterName = new stdClass(); 
-		$this->telemetry->$repeaterName->voltage = $this->telemetry->json->$repeaterName->$telemetryVoltageChannel;
-		$this->telemetry->$repeaterName->gridPower = $this->telemetry->json->$repeaterName->$telemetryGridPowerStatusChannel;
-		$this->telemetry->$repeaterName->tempurature = $this->telemetry->json->$repeaterName->$telemetryTempuratureChannel;
+
+		$this->telemetry->$repeaterName = new stdClass();
+		$this->telemetry->$repeaterName->voltage = $this->telemetry->raw[$repeaterName][$telemetryVoltageChannel];
+		$this->telemetry->$repeaterName->gridPower = $this->telemetry->raw[$repeaterName][$telemetryGridPowerStatusChannel];
+		$this->telemetry->$repeaterName->tempurature = $this->telemetry->raw[$repeaterName][$telemetryTempuratureChannel];
 	}
 }
 
