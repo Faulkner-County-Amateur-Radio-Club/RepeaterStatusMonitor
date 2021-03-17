@@ -78,8 +78,8 @@ $i = 1;
 $currentTime = date("Y-m-d\TH:i:s.vP");
 for($i = 1; $i <= 3; $i++){
     $timeDif = "timeDif" . $i;
-    $$timeDif = $array["W5AUU-"."$i"]["lastUpdated"];
-    $$timeDif = strtotime($currentTime) - strtotime($$timeDif);
+    $lastTimeHeard = $array["W5AUU-"."$i"]["lastUpdated"];
+    $$timeDif = strtotime($currentTime) - strtotime($lastTimeHeard);
     $volts = "volts" . $i;
     $$volts = $array["W5AUU-"."$i"]["telemetry1"] / 10;
     $ponoff = "ponoff" . $i;
@@ -88,6 +88,7 @@ for($i = 1; $i <= 3; $i++){
         $$ponoff = $array["W5AUU-"."$i"]["telemetry5"];
         }
 } 
+
 // Set voltage test minimum point
 $tripPoint = 11.0;
 
@@ -166,11 +167,11 @@ if ($volts2 < $tripPoint) {$message2 = "The voltage at W 5 A U U - 2 is " . $vol
 if ($volts3 < $tripPoint) {$message3 = "The voltage at W 5 A U U - 3 is " . $volts3 . " volts.\n  ";$sendmail3 = 1;}
 
 // Test W5AUU-1 last heard 6hrs
-if ($timeDif1 > 360) {$message4 = "The last time W 5 A U U - 1 heard was " . $timeDif1 . "minuits ago.\n ";$sendmail4 = 1;}
+if ($timeDif1 > 21600) {$message4 = "The last time W 5 A U U - 1 heard was " . $timeDif1 . "minuits ago.\n ";$sendmail4 = 1;}
 // Test W5AUU-2 last heard 6hrs
-if ($timeDif2 > 360) {$message5 = "The last time W 5 A U U - 2 heard was " . $timeDif2 . "minuits ago.\n ";$sendmail5 = 1;}
+if ($timeDif2 > 21600) {$message5 = "The last time W 5 A U U - 2 heard was " . $timeDif2 . "minuits ago.\n ";$sendmail5 = 1;}
 // Test W5AUU-3 Last heard 6hrs
-if ($timeDif3 > 360) {$message6 = "The last time W 5 A U U - 3 heard was " . $timeDif3 . "minuits ago.\n ";$sendmail6 = 1;}
+if ($timeDif3 > 21600) {$message6 = "The last time W 5 A U U - 3 heard was " . $timeDif3 . "minuits ago.\n ";$sendmail6 = 1;}
 
 //test W5AUU-1 for power condition
 if ($ponoff1 < 50) {$message7 = "The power at W 5 A U U - 1  off. #" . $ponoff1 . "\n ";$sendmail7 = 1;}
@@ -279,3 +280,4 @@ if ($sendmail10 > $psendmail10) {
         }
     }*/
 ?>
+
