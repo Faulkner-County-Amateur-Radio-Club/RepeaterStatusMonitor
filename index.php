@@ -75,9 +75,11 @@ $url6 = "https://aprs.fi/telemetry/W5AUU-3&key=100665.Mj8HjUvXqEHYjrV6";*/
 $readJSONFile = file_get_contents("./repeaterTelemetry.json",true);
 $array = json_decode($readJSONFile,true);
 $i = 1;
+$currentTime = date("Y-m-d\TH:i:s.vP");
 for($i = 1; $i <= 3; $i++){
     $timeDif = "timeDif" . $i;
     $$timeDif = $array["W5AUU-"."$i"]["lastUpdated"];
+    $$timeDif = strtotime($currentTime) - strtotime($$timeDif);
     $volts = "volts" . $i;
     $$volts = $array["W5AUU-"."$i"]["telemetry1"] / 10;
     $ponoff = "ponoff" . $i;
@@ -85,15 +87,7 @@ for($i = 1; $i <= 3; $i++){
     if ($i<3){
         $$ponoff = $array["W5AUU-"."$i"]["telemetry5"];
         }
-    
-    $t = time();
-   
-    
-    
 } 
-$currentTime = date("Y-m-d\TH:i:s.vP");
-
-echo $timeDif1 . "  <br>" . $timeDif2 . "  <br>" . $timeDif3 . "  <br>"  .$currentTime. "<br>";
 // Set voltage test minimum point
 $tripPoint = 11.0;
 
