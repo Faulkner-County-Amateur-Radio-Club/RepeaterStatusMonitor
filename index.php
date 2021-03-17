@@ -61,21 +61,45 @@ $sendmail9 = 0;
 $test =0;
 
 //This will read the content of aprs.fi/a/w5auu-* JSON file
-$url1 = "https://api.aprs.fi/api/get?name=W5AUU-1&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
+/*$url1 = "https://api.aprs.fi/api/get?name=W5AUU-1&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 $url2 = "https://api.aprs.fi/api/get?name=W5AUU-2&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 $url3 = "https://api.aprs.fi/api/get?name=W5AUU-3&what=loc&apikey=100665.Mj8HjUvXqEHYjrV6&format=json";
 
 // path to the Telemitry page
 $url4 = "https://aprs.fi/telemetry/W5AUU-1&key=100665.Mj8HjUvXqEHYjrV6";
 $url5 = "https://aprs.fi/telemetry/W5AUU-2&key=100665.Mj8HjUvXqEHYjrV6";
-$url6 = "https://aprs.fi/telemetry/W5AUU-3&key=100665.Mj8HjUvXqEHYjrV6";
+$url6 = "https://aprs.fi/telemetry/W5AUU-3&key=100665.Mj8HjUvXqEHYjrV6";*/
 
+// Read repeaterTelemitry.json
+
+$readJSONFile = file_get_contents("./repeaterTelemetry.json",true);
+$array = json_decode($readJSONFile,true);
+$i = 1;
+for($i = 1; $i <= 3; $i++){
+    $timeDif = "timeDif" . $i;
+    $$timeDif = $array["W5AUU-"."$i"]["lastUpdated"];
+    $volts = "volts" . $i;
+    $$volts = $array["W5AUU-"."$i"]["telemetry1"] / 10;
+    $ponoff = "ponoff" . $i;
+    $$ponoff = $array["W5AUU-"."$i"]["telemetry3"];
+    if ($i<3){
+        $$ponoff = $array["W5AUU-"."$i"]["telemetry5"];
+        }
+    
+    $t = time();
+   
+    
+    
+} 
+$currentTime = date("Y-m-d\TH:i:s.vP");
+
+echo $timeDif1 . "  <br>" . $timeDif2 . "  <br>" . $timeDif3 . "  <br>"  .$currentTime. "<br>";
 // Set voltage test minimum point
 $tripPoint = 11.0;
 
 // Read JSON pages ****************************************************
 
-// read W5AUU-1 jason page 
+/*// read W5AUU-1 jason page 
 $readJSONFile = file_get_contents($url1, true);
 $array = json_decode($readJSONFile,true);
 $timeHeard1 = $array[entries][0][lasttime];
@@ -135,7 +159,7 @@ $regex = "/Channel\s3\:\s[0-9]+/";//Regex for Channel 3
 preg_match($regex, $power,$match);
 $hold = $match[0];
 $ponoff3 = number_format(substr($hold,11));
-
+*/
 
 // message section
 // Test if W5AUU-1 battery voltage below 11 volts
@@ -200,7 +224,7 @@ if (mysqli_query($conn, $query)) {
 }
 
 // Send text to George, Eric, and Pat if condition has changed from normal range
-$subject = 'Warning';
+/*$subject = 'Warning';
 $headers = 'from: $sendFrom';//ddse.net';
 for ($i = 1; $i<=9; $i++) { 
     echo ${"sendmail" . $i}," - ",${"psendmail" . $i}, "  ";
@@ -259,5 +283,5 @@ if ($sendmail10 > $psendmail10) {
         {
             echo "Test Message accepted";
         }
-    }
+    }*/
 ?>
