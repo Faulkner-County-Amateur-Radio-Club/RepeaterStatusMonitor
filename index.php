@@ -21,15 +21,16 @@ function setmsg($urli) {
 }
 
 //Read the data into variables 
-$sql = "SELECT id , State,  Voltage, LastHeard FROM PreviousState";
+$sql = "SELECT id , Voltage, LastHeard, State FROM PreviousState";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         $rpt = $row["id"];
+        if ($rpt < 4){
         ${'psendmail' . $rpt} = $row["Voltage"];
         ${'psendmail' . ($rpt+3)} = $row["LastHeard"];
-        ${'psendmail' . ($rpt+6)} = $row["State"];
+        ${'psendmail' . ($rpt+6)} = $row["State"];}
     }
 } else {
     echo "0 results";
@@ -47,16 +48,16 @@ $messagr7 = "";
 $message8 = "";
 $message9 = "";
 
-$sendmail = 0;
-$sendmail1 = 0;
-$sendmail2 = 0;
-$sendmail3 = 0;
-$sendmail4 = 0;
-$sendmail5 = 0;
-$sendmail6 = 0;
-$sendmail7 = 0;
-$sendmail8 = 0;
-$sendmail9 = 0;
+$sendmail = 1;
+$sendmail1 = 1;
+$sendmail2 = 1;
+$sendmail3 = 1;
+$sendmail4 = 1;
+$sendmail5 = 1;
+$sendmail6 = 1;
+$sendmail7 = 1;
+$sendmail8 = 1;
+$sendmail9 = 1;
 //Set or clear $test bit
 $test =0;
 
@@ -158,27 +159,27 @@ $ponoff3 = number_format(substr($hold,11));
 
 // message section
 // Test if W5AUU-1 battery voltage below 11 volts
-if ($volts1 < $tripPoint) {$message1 = "The voltage at W 5 A U U - 1 is " . $volts1 . " volts.\n  ";$sendmail1 = 1;}
+if ($volts1 < $tripPoint) {$message1 = "The voltage at W 5 A U U - 1 is " . $volts1 . " volts.<br>  ";$sendmail1 = 0;}
 
 // Test if W5AUU-2 battery voltage below 11 volts
-if ($volts2 < $tripPoint) {$message2 = "The voltage at W 5 A U U - 2 is " . $volts2 . " volts.\n  ";$sendmail2 = 1;}
+if ($volts2 < $tripPoint) {$message2 = "The voltage at W 5 A U U - 2 is " . $volts2 . " volts.<br>  ";$sendmail2 = 0;}
 
 // Test if W5AUU-3 battery voltage below 11 volts
-if ($volts3 < $tripPoint) {$message3 = "The voltage at W 5 A U U - 3 is " . $volts3 . " volts.\n  ";$sendmail3 = 1;}
+if ($volts3 < $tripPoint) {$message3 = "The voltage at W 5 A U U - 3 is " . $volts3 . " volts.<br>  ";$sendmail3 = 0;}
 
 // Test W5AUU-1 last heard 6hrs
-if ($timeDif1 > 21600) {$message4 = "The last time W 5 A U U - 1 heard was " . $timeDif1 . "minuits ago.\n ";$sendmail4 = 1;}
+if ($timeDif1 > 21600) {$message4 = "The last time W 5 A U U - 1 heard was " . $timeDif1 . "minuits ago.<br> ";$sendmail4 = 0;}
 // Test W5AUU-2 last heard 6hrs
-if ($timeDif2 > 21600) {$message5 = "The last time W 5 A U U - 2 heard was " . $timeDif2 . "minuits ago.\n ";$sendmail5 = 1;}
+if ($timeDif2 > 21600) {$message5 = "The last time W 5 A U U - 2 heard was " . $timeDif2 . "minuits ago.<br> ";$sendmail5 = 0;}
 // Test W5AUU-3 Last heard 6hrs
-if ($timeDif3 > 21600) {$message6 = "The last time W 5 A U U - 3 heard was " . $timeDif3 . "minuits ago.\n ";$sendmail6 = 1;}
+if ($timeDif3 > 21600) {$message6 = "The last time W 5 A U U - 3 heard was " . $timeDif3 . "minuits ago.<br> ";$sendmail6 = 0;}
 
 //test W5AUU-1 for power condition
-if ($ponoff1 < 50) {$message7 = "The power at W 5 A U U - 1  off. #" . $ponoff1 . "\n ";$sendmail7 = 1;}
+if ($ponoff1 < 50) {$message7 = "The power at W 5 A U U - 1  off. #" . $ponoff1 . "<br> ";$sendmail7 = 0;}
 //test W5AUU-2 for power condition
-if ($ponoff2 < 50) {$message8 = "The power at W 5 A U U - 2  off. #" . $ponoff2 . "\n ";$sendmail8 = 1;}
+if ($ponoff2 < 50) {$message8 = "The power at W 5 A U U - 2  off. #" . $ponoff2 . "<br> ";$sendmail8 = 0;}
 // test W5AUU-3 for power condition
-if ($ponoff3 > 100) {$message9 = "The power at W 5 A U U - 3  off. #" . $ponoff3 . "\n ";$sendmail9 = 1;}
+if ($ponoff3 > 100) {$message9 = "The power at W 5 A U U - 3  off. #" . $ponoff3 . "<br> ";$sendmail9 = 0;}
 
 // puts $test bit in the correct position
 $sendmail10 = $test;
@@ -210,7 +211,7 @@ if (mysqli_query($conn, $query)) {
 	echo "ERROR: Could not execute $query. " . mysqli_error($conn);
 }
 
-$query = "REPLACE INTO PreviousState (id , State,  Voltage, LastHeard) VALUES ('4', '" . $test . "', '0', '0') ;";
+$query = "REPLACE INTO PreviousState (id , State,  Voltage, LastHeard) VALUES ('4', '" . $test . "', '10', '10') ;";
 
 if (mysqli_query($conn, $query)) {
 	echo "Records inserted successfully.";
@@ -220,23 +221,28 @@ if (mysqli_query($conn, $query)) {
 
 // Send text to George, Eric, and Pat if condition has changed from normal range
 /*$subject = 'Warning';
-$headers = 'from: $sendFrom';//ddse.net';
+$headers = 'from: $sendFrom';//ddse.net';*/
 for ($i = 1; $i<=9; $i++) { 
-    echo ${"sendmail" . $i}," - ",${"psendmail" . $i}, "  ";
+/*$i=1;
+echo "<br> ";
+do {
+    echo $i . "  " . ${"sendmail" . $i} . " - " .${"psendmail" . $i} . "  <br>";
+    $i++;
+} while ($i<10);*/
     if (${'sendmail' . $i} != ${'psendmail' . $i}) {
-        if (${'sendmail' . $i} > ${'psendmail' . $i}) {
+        if (${'sendmail' . $i} < ${'psendmail' . $i}) {
             if (mail($recipient, $subject, ${'message' . $i}, $headers))
                 {
                     echo "Message accepted";
                 }
             //special text for Mark on power off condition only
-            if ($sendmail8 > $psendmail8) {
+            if ($sendmail8 < $psendmail8) {
                 if (mail($mark, $subject, "The power is off at the OEM repeater shack.", $headers))
                 {
                     echo "Message accepted";
                 }
             }
-            if ($sendmail9 > $psendmail9) {
+            if ($sendmail9 < $psendmail9) {
                 if (mail($david, $subject, "The power is off at the repeater shack.", $headers))
                 {
                     echo "Message accepted";
@@ -245,21 +251,21 @@ for ($i = 1; $i<=9; $i++) {
         }
 
         // If condition clears send text
-        elseif (${'sendmail' . $i} < ${'psendmail' . $i}) {
+        elseif (${'sendmail' . $i} > ${'psendmail' . $i}) {
             if (mail($recipient, $subject, 'Condition Cleared', $headers))
             {
                 echo "Message accepted";
             }
 
             // If power back on send text to Mark
-            if ($sendmail8 > $psendmail8) {
+            if ($sendmail8 < $psendmail8) {
                 if (mail($mark, $subject, "The power is back ON at the OEM repeater shack.", $headers))
                 {
                     echo "Message accepted";
                 }
             }
             // If power back on send text to David
-            if ($sendmail9 > $psendmail9) {
+            if ($sendmail9 < $psendmail9) {
                 if (mail($david, $subject, "The power is back ON at the repeater shack.", $headers))
                 {
                     echo "Message accepted";
@@ -273,11 +279,12 @@ for ($i = 1; $i<=9; $i++) {
 //for loop 
 
 // Test for new user
-if ($sendmail10 > $psendmail10) {
+if ($sendmail10 < $psendmail10) {
         if (mail('number@txt.att.net' , $subject, 'I have just reset the TNC and the arduino. Thanks.', $headers))
         {
             echo "Test Message accepted";
         }
-    }*/
+    }
 ?>
+
 
